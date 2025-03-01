@@ -1,7 +1,13 @@
+import { RouterProvider } from "react-router";
+import { routes } from "./routes/Routes";
+//context
+import { CurrentUserProvider } from "./context";
 function App() {
   return (
     <>
-      <div>Hellow</div>
+      <CurrentUserProvider>
+        <RouterProvider router={routes} />
+      </CurrentUserProvider>
     </>
   );
 }
