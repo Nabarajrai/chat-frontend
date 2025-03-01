@@ -1,0 +1,27 @@
+@use "./variables" as *;
+
+@mixin image {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+@mixin gradient($deg, $pri, $sec) {
+  background-color: linear-gradient($deg, $pri, $sec);
+}
+
+@mixin box-shadow($color) {
+  box-shadow: $color 0px 1px 2px 0px;
+}
+
+@mixin dark($opacity) {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, $opacity);
+  pointer-events: none;
+}
