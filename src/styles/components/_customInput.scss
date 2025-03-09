@@ -41,8 +41,22 @@
       padding: 0.4rem;
       color: $secondary-color;
     }
+    &:focus ~ .input-group__icon svg {
+      fill: $secondary-color;
+    }
     &:not(:focus) + .input-group__label {
       color: $accent-color;
+    }
+  }
+  &__icon {
+    position: absolute;
+    right: 0;
+    top: 9px;
+    padding-right: 1rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    svg {
+      fill: $accent-color;
     }
   }
 }

@@ -1,5 +1,8 @@
 import { useState } from "react";
 import CustomInputComponent from "../../components/cutomInput/CustomInput.component";
+//icons
+import { FaRegEye } from "react-icons/fa";
+
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   return (
@@ -23,6 +26,7 @@ const LoginPage = () => {
               setValue={setEmail}
               type="password"
               label="Password"
+              icon={<FaRegEye />}
             />
             <button>Login</button>
           </form>
