@@ -1,31 +1,32 @@
-import { memo } from "react";
+import { memo, useMemo } from "react";
 import { useCallback } from "react";
 import { PropTypes } from "prop-types";
+import classnames from "classnames";
 
 const CustomInputComponent = ({
   id,
-  value,
-  setValue,
+  size,
+  onChange,
   type,
   label,
   icon,
   ...rest
 }) => {
-  const handleValue = useCallback(
-    (e) => {
-      setValue(e.target.value);
-    },
-    [setValue]
-  );
-  console.log("Custom");
+  const sizeClassName = useMemo(() => {
+    return size && `custom-input-${size}`;
+  }, [size]);
+
+  const combineClassNames = useMemo(() => {
+    return classnames("custom-input", sizeClassName);
+  }, [sizeClassName]);
+
   return (
-    <div className="custom-input">
+    <div className={combineClassNames}>
       <div className="input-group">
         <input
           type={type}
-          value={value}
           {...rest}
-          onChange={handleValue}
+          onChange={onChange}
           id={id}
           placeholder=""
           className="input-group__input"
@@ -43,9 +44,9 @@ export default memo(CustomInputComponent);
 
 CustomInputComponent.propTypes = {
   id: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
-  setValue: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
   type: PropTypes.string.isRequired,
   label: PropTypes.string,
   icon: PropTypes.node,
+  size: PropTypes.string,
 };

@@ -4,6 +4,15 @@
 .custom-input {
   width: 100%;
   padding: 0.5rem;
+  &.custom-input-lg {
+    width: 100%;
+  }
+  &.custom-input-md {
+    width: 80%;
+  }
+  &.custom-input-sm {
+    width: 60%;
+  }
 }
 .input-group {
   @include flex($justify: space-between);
@@ -14,6 +23,7 @@
   border-radius: 5px;
   padding: 0.5rem;
   transition: outline 0.11s easet;
+
   &:focus-within {
     outline: 1px solid $secondary-color;
     border-color: $secondary-color;
