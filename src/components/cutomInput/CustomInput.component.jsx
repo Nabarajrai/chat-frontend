@@ -42,6 +42,7 @@ const CustomInputComponent = ({
 export default memo(CustomInputComponent);
 
 CustomInputComponent.propTypes = {
+  id: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   setValue: PropTypes.func.isRequired,
   type: PropTypes.string.isRequired,
