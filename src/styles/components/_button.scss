@@ -1,0 +1,39 @@
+@use "../helpers/variables" as *;
+@use "../helpers/mixin" as *;
+
+.btn-wrapper {
+  width: 100%;
+  padding: 0.5rem;
+  &.btn-wrapper-lg {
+    width: 100%;
+  }
+  &.btn-wrapper-md {
+    width: 80%;
+  }
+  &.btn-wrapper-sm {
+    width: 60%;
+  }
+  .btn {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+    &.btn-primary {
+      background: $primary-color;
+      color: white;
+      transition: background 0.15s linear;
+      &:hover {
+        background: rgba($primary-color, 0.9);
+      }
+    }
+    &.btn-secondary {
+      background-color: $accent-color;
+      color: $secondary-color;
+      transition: background 0.15s linear;
+      &:hover {
+        background: $button-hover;
+      }
+    }
+  }
+}

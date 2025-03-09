@@ -1,5 +1,7 @@
 import { useCallback, useMemo, useState } from "react";
+//compoents
 import CustomInputComponent from "../../components/cutomInput/CustomInput.component";
+import ButtonComponent from "../../components/button/Button.component";
 //icons
 import { FaRegEye, FaEyeSlash } from "react-icons/fa";
 
@@ -58,7 +60,9 @@ const LoginPage = () => {
               onChange={handleChange}
               handleShowPassword={handleShowPassword}
             />
-            <button>Login</button>
+            <ButtonComponent size="lg" varient="secondary">
+              Login
+            </ButtonComponent>
           </form>
         </div>
         <div className="login-footer">
