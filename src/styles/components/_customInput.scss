@@ -1,0 +1,48 @@
+@use "../helpers/variables" as *;
+@use "../helpers/mixin" as *;
+
+.custom-input {
+  width: 100%;
+  padding: 0.5rem;
+}
+.input-group {
+  @include flex($justify: space-between);
+  position: relative;
+  flex-direction: column;
+  width: 100%;
+  border: 1px solid $accent-color;
+  border-radius: 5px;
+  padding: 0.5rem;
+  transition: outline 0.11s easet;
+  &:focus-within {
+    outline: 1px solid $secondary-color;
+    border-color: $secondary-color;
+  }
+
+  &__label {
+    position: absolute;
+    top: 20px;
+    left: 12px;
+    transform-origin: 0 0;
+    transform: translate3d(6px, -10px, 0) scale(0.6);
+    background: white;
+    pointer-events: none;
+    transition: all 0.15s linear;
+  }
+  &__input {
+    position: relative;
+    display: block;
+    width: 100%;
+    color: $text-color;
+    padding: 0.01rem;
+    &:focus + .input-group__label,
+    &:not(:placeholder-shown) + .input-group__label {
+      transform: translate3d(0, -39px, 0) scale(0.7);
+      padding: 0.4rem;
+      color: $secondary-color;
+    }
+    &:not(:focus) + .input-group__label {
+      color: $accent-color;
+    }
+  }
+}

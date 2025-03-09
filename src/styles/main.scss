@@ -1,6 +1,9 @@
 @use "./helpers/variables" as *;
 @use "./helpers/mixin" as *;
+@use "./helpers/helpers" as *;
 
-div {
-  background-color: $bg-color;
-}
+//pages
+@use "./pages/login" as *;
+
+//componets
+@use "./components/customInput" as *;
