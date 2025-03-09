@@ -1,5 +1,4 @@
 import { memo, useMemo } from "react";
-import { useCallback } from "react";
 import { PropTypes } from "prop-types";
 import classnames from "classnames";
 
@@ -10,6 +9,7 @@ const CustomInputComponent = ({
   type,
   label,
   icon,
+  handleShowPassword,
   ...rest
 }) => {
   const sizeClassName = useMemo(() => {
@@ -34,7 +34,13 @@ const CustomInputComponent = ({
         <label htmlFor="input" className="input-group__label">
           {label}
         </label>
-        {icon && <span className="input-group__icon">{icon}</span>}
+        {icon && (
+          <span
+            className="input-group__icon"
+            onClick={id === "password" && handleShowPassword}>
+            {icon}
+          </span>
+        )}
       </div>
     </div>
   );
@@ -49,4 +55,5 @@ CustomInputComponent.propTypes = {
   label: PropTypes.string,
   icon: PropTypes.node,
   size: PropTypes.string,
+  handleShowPassword: PropTypes.func,
 };

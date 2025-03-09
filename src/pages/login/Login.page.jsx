@@ -1,13 +1,22 @@
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import CustomInputComponent from "../../components/cutomInput/CustomInput.component";
 //icons
-import { FaRegEye } from "react-icons/fa";
+import { FaRegEye, FaEyeSlash } from "react-icons/fa";
 
 const LoginPage = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const [loginValue, setLoginValue] = useState({
     email: "",
     password: "",
   });
+
+  const passwordIcon = useMemo(() => {
+    return showPassword ? <FaRegEye /> : <FaEyeSlash />;
+  }, [showPassword]);
+
+  const inputType = useMemo(() => {
+    return showPassword ? "text" : "password";
+  }, [showPassword]);
 
   const handleChange = useCallback(
     (e) => {
@@ -16,6 +25,10 @@ const LoginPage = () => {
     },
     [loginValue]
   );
+
+  const handleShowPassword = useCallback(() => {
+    setShowPassword(!showPassword);
+  }, [showPassword]);
 
   console.log("login page", loginValue);
 
@@ -37,12 +50,13 @@ const LoginPage = () => {
             />
             <CustomInputComponent
               id="password"
-              type="password"
+              type={inputType}
               label="Password"
               size="lg"
-              icon={<FaRegEye />}
+              icon={passwordIcon}
               name="password"
               onChange={handleChange}
+              handleShowPassword={handleShowPassword}
             />
             <button>Login</button>
           </form>
