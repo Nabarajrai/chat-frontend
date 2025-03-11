@@ -1,0 +1,26 @@
+// src/styles/helpers/_responsive.scss
+@use "./variables" as *;
+
+@mixin small-screen {
+  @media (max-width: $breakpoint-small) {
+    @content;
+  }
+}
+
+@mixin medium-screen {
+  @media (min-width: $breakpoint-medium) {
+    @content;
+  }
+}
+
+@mixin large-screen {
+  @media (min-width: $breakpoint-large) {
+    @content;
+  }
+}
+
+@mixin xlarge-screen {
+  @media (min-width: $breakpoint-xlarge) {
+    @content;
+  }
+}

@@ -34,7 +34,7 @@
     top: 20px;
     left: 12px;
     transform-origin: 0 0;
-    transform: translate3d(6px, -10px, 0) scale(0.6);
+    transform: translate3d(6px, -10px, 0) scale(0.7);
     background: white;
     pointer-events: none;
     transition: all 0.15s linear;
@@ -47,7 +47,7 @@
     padding: 0.01rem;
     &:focus + .input-group__label,
     &:not(:placeholder-shown) + .input-group__label {
-      transform: translate3d(0, -39px, 0) scale(0.7);
+      transform: translate3d(0, -35px, 0) scale(0.6);
       padding: 0.4rem;
       color: $secondary-color;
     }
