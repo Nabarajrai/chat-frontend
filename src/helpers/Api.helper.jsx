@@ -1,9 +1,9 @@
 import axios from "axios";
 
-export const apiGenerator = ({ baseUrl }) => {
+export const apiGenerator = ({ baseURL }) => {
   return async function api(url, method = "GET", body = null, apiConfig = {}) {
     const config = {
-      baseUrl,
+      baseURL,
       url,
       method,
       headers: {
@@ -16,9 +16,7 @@ export const apiGenerator = ({ baseUrl }) => {
     if (body) {
       config.data = body;
     }
-    if (body && !(body instanceof FormData)) {
-      config.headers["Content-Type "] = "aplication.json";
-    }
+
     if (config?.file) {
       delete config.headers["Content-Type"];
     }

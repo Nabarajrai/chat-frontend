@@ -1,7 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback, useMemo, useState } from "react";
 //compoents
 import CustomInputComponent from "../../components/cutomInput/CustomInput.component";
 import ButtonComponent from "../../components/button/Button.component";
+//hooks
+import { useAuth } from "../../hooks/useAuth";
 //icons
 import { FaRegEye, FaEyeSlash } from "react-icons/fa";
 
@@ -11,6 +14,8 @@ const LoginPage = () => {
     email: "",
     password: "",
   });
+
+  const { login } = useAuth();
 
   const passwordIcon = useMemo(() => {
     return showPassword ? <FaRegEye /> : <FaEyeSlash />;
@@ -32,6 +37,18 @@ const LoginPage = () => {
     setShowPassword(!showPassword);
   }, [showPassword]);
 
+  const handleLogin = useCallback(
+    (e) => {
+      e.preventDefault();
+      const body = {
+        email: loginValue.email,
+        password: loginValue.password,
+      };
+      login(body);
+    },
+    [login, loginValue]
+  );
+
   console.log("login page", loginValue);
 
   return (
@@ -41,7 +58,7 @@ const LoginPage = () => {
           <h3 className="login-header__title">Login to Your Account</h3>
         </div>
         <div className="login-form">
-          <form action="">
+          <form action="" onSubmit={handleLogin}>
             <CustomInputComponent
               id="email"
               size="lg"
