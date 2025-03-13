@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { getLocalStorage } from "../helpers/LocatStorage.helper";
 
 const intialState = null;
 
@@ -12,6 +13,11 @@ export const UserContext = createContext({
 
 export const CurrentUserProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+    const getUser = getLocalStorage("user");
+    setCurrentUser(getUser);
+  }, []);
 
   return (
     <UserContext.Provider value={{ currentUser, setCurrentUser }}>
