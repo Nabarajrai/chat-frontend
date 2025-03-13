@@ -22,8 +22,8 @@ export const apiGenerator = ({ baseURL }) => {
     }
     try {
       const response = await axios(config);
-      console.log(response);
-      return response;
+      console.log("response", response);
+      return response.data;
     } catch (e) {
       console.log(e);
       const errorMessage = e?.response?.data?.message || e?.message;
