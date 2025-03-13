@@ -1,10 +1,14 @@
+import { useMemo } from "react";
 import CustomInputComponent from "../../components/cutomInput/CustomInput.component";
 import ButtonComponent from "../../components/button/Button.component";
 import { useCallback, useState } from "react";
 import { Link } from "react-router";
 //hooks
 import { useAuth } from "../../hooks/useAuth";
+//icons
+import { FaRegEye, FaEyeSlash } from "react-icons/fa";
 const RegisterPage = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const [registerValues, setRegisterValues] = useState({
     firstName: "",
     lastName: "",
@@ -14,6 +18,14 @@ const RegisterPage = () => {
   });
 
   const { loading, error, setError, register } = useAuth();
+
+  const inputType = useMemo(() => {
+    return showPassword ? "text" : "password";
+  }, [showPassword]);
+
+  const passwordIcon = useMemo(() => {
+    return showPassword ? <FaRegEye /> : <FaEyeSlash />;
+  }, [showPassword]);
 
   const handleChange = useCallback((event) => {
     const { name, value } = event.target;
@@ -53,6 +65,10 @@ const RegisterPage = () => {
   const handleFocused = useCallback(() => {
     setError("");
   }, [setError]);
+
+  const handleShowPassword = useCallback(() => {
+    setShowPassword(!showPassword);
+  }, [showPassword]);
 
   console.log("registerValues");
 
@@ -94,20 +110,24 @@ const RegisterPage = () => {
             <CustomInputComponent
               id="password"
               size="lg"
-              type="password"
               label="Password"
               name="password"
               onChange={handleChange}
               onFocus={handleFocused}
+              type={inputType}
+              icon={passwordIcon}
+              handleShowPassword={handleShowPassword}
             />
             <CustomInputComponent
               id="confirmPassword"
               size="lg"
-              type="password"
               label="Confirm Password"
               name="confirmPassword"
               onChange={handleChange}
               onFocus={handleFocused}
+              type={inputType}
+              icon={passwordIcon}
+              handleShowPassword={handleShowPassword}
             />
             {error && <div className="register-error">{error}</div>}
             <ButtonComponent size="lg" varient="secondary" disabled={loading}>
