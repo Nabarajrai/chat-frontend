@@ -1,4 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useContext, useCallback } from "react";
+import { useNavigate } from "react-router";
 import { api, APIS } from "../config/Api.config";
 import { UserContext } from "../context/User.context";
 import { setLocalStorage } from "../helpers/LocatStorage.helper";
@@ -10,6 +12,7 @@ export const useAuth = () => {
 
   const { setCurrentUser } = useContext(UserContext);
   const { showToast } = useToast();
+  const navigate = useNavigate();
 
   const showToastHanlder = useCallback(
     (message, type) => {
@@ -18,7 +21,7 @@ export const useAuth = () => {
     [showToast]
   );
 
-  const login = async (body) => {
+  const login = useCallback(async (body) => {
     setLoading(true);
     try {
       const res = await api(APIS.login, "POST", body);
@@ -31,6 +34,22 @@ export const useAuth = () => {
     } finally {
       setLoading(false);
     }
-  };
-  return { login, error, setError, loading, setLoading };
+  }, []);
+
+  const register = useCallback(async (body) => {
+    setLoading(true);
+    try {
+      const res = await api(APIS.register, "POST", body);
+      console.log("register", res);
+      showToastHanlder(res?.message, "success");
+      navigate("/login");
+    } catch (e) {
+      setError(e?.message);
+      return e.message;
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  return { login, error, setError, loading, setLoading, register };
 };

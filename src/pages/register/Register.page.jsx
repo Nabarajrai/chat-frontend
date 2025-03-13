@@ -2,6 +2,8 @@ import CustomInputComponent from "../../components/cutomInput/CustomInput.compon
 import ButtonComponent from "../../components/button/Button.component";
 import { useCallback, useState } from "react";
 import { Link } from "react-router";
+//hooks
+import { useAuth } from "../../hooks/useAuth";
 const RegisterPage = () => {
   const [registerValues, setRegisterValues] = useState({
     firstName: "",
@@ -11,6 +13,8 @@ const RegisterPage = () => {
     confirmPassword: "",
   });
 
+  const { loading, error, setError, register } = useAuth();
+
   const handleChange = useCallback((event) => {
     const { name, value } = event.target;
     setRegisterValues((prev) => ({
@@ -19,7 +23,38 @@ const RegisterPage = () => {
     }));
   }, []);
 
-  console.log(registerValues);
+  const handleRegister = useCallback(
+    async (event) => {
+      event.preventDefault();
+      const body = {
+        firstName: registerValues.firstName,
+        lastName: registerValues.lastName,
+        email: registerValues.email,
+        password: registerValues.password,
+      };
+      if (
+        !registerValues.firstName ||
+        !registerValues.lastName ||
+        !registerValues.email ||
+        !registerValues.password ||
+        !registerValues.confirmPassword
+      ) {
+        setError("All fields are required!");
+        return null;
+      }
+      if (registerValues.password !== registerValues.confirmPassword) {
+        setError("Passwords do not match!");
+        return null;
+      }
+      await register(body);
+    },
+    [register, registerValues, setError]
+  );
+  const handleFocused = useCallback(() => {
+    setError("");
+  }, [setError]);
+
+  console.log("registerValues");
 
   return (
     <div className="register-container">
@@ -28,7 +63,7 @@ const RegisterPage = () => {
           <h3>Register here!</h3>
         </div>
         <div className="register-form">
-          <form>
+          <form onSubmit={handleRegister}>
             <CustomInputComponent
               id="firstName"
               size="lg"
@@ -36,6 +71,7 @@ const RegisterPage = () => {
               label="First Name"
               name="firstName"
               onChange={handleChange}
+              onFocus={handleFocused}
             />
             <CustomInputComponent
               id="lastName"
@@ -44,6 +80,7 @@ const RegisterPage = () => {
               label="Last Name"
               name="lastName"
               onChange={handleChange}
+              onFocus={handleFocused}
             />
             <CustomInputComponent
               id="email"
@@ -52,6 +89,7 @@ const RegisterPage = () => {
               label="Email"
               name="email"
               onChange={handleChange}
+              onFocus={handleFocused}
             />
             <CustomInputComponent
               id="password"
@@ -60,6 +98,7 @@ const RegisterPage = () => {
               label="Password"
               name="password"
               onChange={handleChange}
+              onFocus={handleFocused}
             />
             <CustomInputComponent
               id="confirmPassword"
@@ -68,9 +107,11 @@ const RegisterPage = () => {
               label="Confirm Password"
               name="confirmPassword"
               onChange={handleChange}
+              onFocus={handleFocused}
             />
-            <ButtonComponent size="lg" varient="secondary">
-              Register
+            {error && <div className="register-error">{error}</div>}
+            <ButtonComponent size="lg" varient="secondary" disabled={loading}>
+              {loading ? "Registering..." : "Register"}
             </ButtonComponent>
           </form>
           <div className="register-footer">

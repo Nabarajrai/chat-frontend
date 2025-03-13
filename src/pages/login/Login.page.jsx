@@ -15,7 +15,7 @@ const LoginPage = () => {
     password: "",
   });
 
-  const { login, error, setError } = useAuth();
+  const { login, error, setError, loading } = useAuth();
 
   const passwordIcon = useMemo(() => {
     return showPassword ? <FaRegEye /> : <FaEyeSlash />;
@@ -38,13 +38,13 @@ const LoginPage = () => {
   }, [showPassword]);
 
   const handleLogin = useCallback(
-    (e) => {
+    async (e) => {
       e.preventDefault();
       const body = {
         email: loginValue.email,
         password: loginValue.password,
       };
-      login(body);
+      await login(body);
     },
     [login, loginValue]
   );
@@ -84,8 +84,8 @@ const LoginPage = () => {
               onFocus={handleFocused}
             />
             {error && <div className="login-error">{error}</div>}
-            <ButtonComponent size="lg" varient="secondary">
-              Login
+            <ButtonComponent size="lg" varient="secondary" disabled={loading}>
+              {loading ? "Logging in..." : "Login"}
             </ButtonComponent>
           </form>
         </div>
