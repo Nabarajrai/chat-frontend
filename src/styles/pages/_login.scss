@@ -41,7 +41,11 @@
     width: 100%;
   }
 }
-
+.login-error {
+  font-size: 0.7rem;
+  text-align: center;
+  color: $error;
+}
 .login-footer {
   @include flex($justify: center);
   margin-top: 1rem;

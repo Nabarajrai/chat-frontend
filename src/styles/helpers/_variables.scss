@@ -6,6 +6,8 @@ $accent-color: #c0e218; // Lime Green (CTA & Highlights)
 $background-color: #f1f8e9; // Soft Gray/White (Clean & Minimal)
 $text-color: #333333; // Dark Gray (Readable)
 $button-hover: color.scale($accent-color, $lightness: -20.4%);
+$success: $secondary-color;
+$error: red;
 
 //breakpoints
 $breakpoint-small: 576px;

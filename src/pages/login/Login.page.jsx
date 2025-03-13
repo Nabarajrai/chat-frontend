@@ -15,7 +15,7 @@ const LoginPage = () => {
     password: "",
   });
 
-  const { login } = useAuth();
+  const { login, error, setError } = useAuth();
 
   const passwordIcon = useMemo(() => {
     return showPassword ? <FaRegEye /> : <FaEyeSlash />;
@@ -49,7 +49,11 @@ const LoginPage = () => {
     [login, loginValue]
   );
 
-  console.log("login page", loginValue);
+  const handleFocused = useCallback(() => {
+    setError("");
+  }, [setError]);
+
+  console.log("login page");
 
   return (
     <div className="login-container">
@@ -66,6 +70,7 @@ const LoginPage = () => {
               label="Email"
               name="email"
               onChange={handleChange}
+              onFocus={handleFocused}
             />
             <CustomInputComponent
               id="password"
@@ -76,7 +81,9 @@ const LoginPage = () => {
               name="password"
               onChange={handleChange}
               handleShowPassword={handleShowPassword}
+              onFocus={handleFocused}
             />
+            {error && <div className="login-error">{error}</div>}
             <ButtonComponent size="lg" varient="secondary">
               Login
             </ButtonComponent>

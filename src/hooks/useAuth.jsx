@@ -13,13 +13,10 @@ export const useAuth = () => {
 
   const showToastHanlder = useCallback(
     (message, type) => {
-      console.log("message: " + message);
       showToast(message, type);
     },
     [showToast]
   );
-
-  console.log(error, loading);
 
   const login = async (body) => {
     setLoading(true);
@@ -35,5 +32,5 @@ export const useAuth = () => {
       setLoading(false);
     }
   };
-  return { login };
+  return { login, error, setError, loading, setLoading };
 };
