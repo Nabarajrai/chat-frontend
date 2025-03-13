@@ -4,7 +4,8 @@
 
 //pages
 @use "./pages/login" as *;
+@use "./pages/register" as *;
 
 //componets
 @use "./components/customInput" as *;
-@use "./components//button" as *;
+@use "./components/button" as *;
