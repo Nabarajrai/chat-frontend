@@ -2,7 +2,7 @@ import { useState, useContext, useCallback } from "react";
 import { api, APIS } from "../config/Api.config";
 import { UserContext } from "../context/User.context";
 import { setLocalStorage } from "../helpers/LocatStorage.helper";
-import { useToast } from "./useToas";
+import { useToast } from "./useToast";
 
 export const useAuth = () => {
   const [error, setError] = useState("");
