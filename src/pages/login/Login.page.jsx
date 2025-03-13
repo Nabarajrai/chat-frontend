@@ -1,5 +1,5 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback, useMemo, useState } from "react";
+import { Link } from "react-router";
 //compoents
 import CustomInputComponent from "../../components/cutomInput/CustomInput.component";
 import ButtonComponent from "../../components/button/Button.component";
@@ -86,7 +86,9 @@ const LoginPage = () => {
           <span className="login-footer__account">
             Don&apos;t have an account?
           </span>
-          <span className="login-footer__register">Register here</span>
+          <span className="login-footer__register">
+            <Link to="/register">Register here</Link>
+          </span>
         </div>
       </div>
     </div>

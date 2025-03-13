@@ -53,10 +53,11 @@
   &__account {
     cursor: pointer;
   }
-  &__register {
+  &__register a {
     color: $secondary-color;
     cursor: pointer;
     font-weight: 600;
+    text-decoration: none;
     transition: color 0.5s ease;
     &:hover {
       color: rgba($primary-color, 0.8);
