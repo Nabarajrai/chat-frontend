@@ -40,13 +40,17 @@ const LoginPage = () => {
   const handleLogin = useCallback(
     async (e) => {
       e.preventDefault();
+      if (!loginValue.email || !loginValue.password) {
+        setError("Please fill all the fields");
+        return;
+      }
       const body = {
         email: loginValue.email,
         password: loginValue.password,
       };
       await login(body);
     },
-    [login, loginValue]
+    [login, loginValue, setError]
   );
 
   const handleFocused = useCallback(() => {
