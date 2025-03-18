@@ -80,56 +80,66 @@ const RegisterPage = () => {
         </div>
         <div className="register-form">
           <form onSubmit={handleRegister}>
-            <CustomInputComponent
-              id="firstName"
-              size="lg"
-              type="text"
-              label="First Name"
-              name="firstName"
-              onChange={handleChange}
-              onFocus={handleFocused}
-            />
-            <CustomInputComponent
-              id="lastName"
-              size="lg"
-              type="text"
-              label="Last Name"
-              name="lastName"
-              onChange={handleChange}
-              onFocus={handleFocused}
-            />
-            <CustomInputComponent
-              id="email"
-              size="lg"
-              type="email"
-              label="Email"
-              name="email"
-              onChange={handleChange}
-              onFocus={handleFocused}
-            />
-            <CustomInputComponent
-              id="password"
-              size="lg"
-              label="Password"
-              name="password"
-              onChange={handleChange}
-              onFocus={handleFocused}
-              type={inputType}
-              icon={passwordIcon}
-              handleShowPassword={handleShowPassword}
-            />
-            <CustomInputComponent
-              id="confirmPassword"
-              size="lg"
-              label="Confirm Password"
-              name="confirmPassword"
-              onChange={handleChange}
-              onFocus={handleFocused}
-              type={inputType}
-              icon={passwordIcon}
-              handleShowPassword={handleShowPassword}
-            />
-            {error && <div className="register-error">{error}</div>}
+            <div className="register-form__firstName">
+              <CustomInputComponent
+                id="firstName"
+                size="lg"
+                type="text"
+                label="First Name"
+                name="firstName"
+                onChange={handleChange}
+                onFocus={handleFocused}
+              />
+            </div>
+            <div className="register-form__lastName">
+              <CustomInputComponent
+                id="lastName"
+                size="lg"
+                type="text"
+                label="Last Name"
+                name="lastName"
+                onChange={handleChange}
+                onFocus={handleFocused}
+              />
+            </div>
+            <div className="register-form__email">
+              <CustomInputComponent
+                id="email"
+                size="lg"
+                type="email"
+                label="Email"
+                name="email"
+                onChange={handleChange}
+                onFocus={handleFocused}
+              />
+            </div>
+            <div className="register-form__password">
+              <CustomInputComponent
+                id="password"
+                size="lg"
+                label="Password"
+                name="password"
+                onChange={handleChange}
+                onFocus={handleFocused}
+                type={inputType}
+                icon={passwordIcon}
+                handleShowPassword={handleShowPassword}
+              />
+            </div>
+            <div className="register-form__confirmPassword">
+              <CustomInputComponent
+                id="confirmPassword"
+                size="lg"
+                label="Confirm Password"
+                name="confirmPassword"
+                onChange={handleChange}
+                onFocus={handleFocused}
+                type={inputType}
+                icon={passwordIcon}
+                handleShowPassword={handleShowPassword}
+              />
+              {error && <div className="register-error">{error}</div>}
+            </div>
             <ButtonComponent size="lg" varient="secondary" disabled={loading}>
               {loading ? "Registering..." : "Register"}
             </ButtonComponent>

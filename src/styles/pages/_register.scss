@@ -60,3 +60,20 @@
   text-align: center;
   color: $error;
 }
+.register-form {
+  &__firstName {
+    padding: 0.5rem;
+  }
+  &__lastName {
+    padding: 0.5rem;
+  }
+  &__email {
+    padding: 0.5rem;
+  }
+  &__password {
+    padding: 0.5rem;
+  }
+  &__confirmPassword {
+    padding: 0.5rem;
+  }
+}
