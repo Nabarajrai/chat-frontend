@@ -40,6 +40,12 @@
     display: block;
     width: 100%;
   }
+  &__email {
+    padding: 0.5rem;
+  }
+  &__password {
+    padding: 0.5rem;
+  }
 }
 .login-error {
   font-size: 0.7rem;

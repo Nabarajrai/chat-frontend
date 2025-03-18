@@ -67,26 +67,31 @@ const LoginPage = () => {
         </div>
         <div className="login-form">
           <form action="" onSubmit={handleLogin}>
-            <CustomInputComponent
-              id="email"
-              size="lg"
-              type="text"
-              label="Email"
-              name="email"
-              onChange={handleChange}
-              onFocus={handleFocused}
-            />
-            <CustomInputComponent
-              id="password"
-              type={inputType}
-              label="Password"
-              size="lg"
-              icon={passwordIcon}
-              name="password"
-              onChange={handleChange}
-              handleShowPassword={handleShowPassword}
-              onFocus={handleFocused}
-            />
+            <div className="login-form__email">
+              <CustomInputComponent
+                id="email"
+                size="lg"
+                type="text"
+                label="Email"
+                name="email"
+                onChange={handleChange}
+                onFocus={handleFocused}
+              />
+            </div>
+            <div className="login-form__password">
+              <CustomInputComponent
+                id="password"
+                type={inputType}
+                label="Password"
+                size="lg"
+                icon={passwordIcon}
+                name="password"
+                onChange={handleChange}
+                handleShowPassword={handleShowPassword}
+                onFocus={handleFocused}
+              />
+            </div>
+
             {error && <div className="login-error">{error}</div>}
             <ButtonComponent size="lg" varient="secondary" disabled={loading}>
               {loading ? "Logging in..." : "Login"}
