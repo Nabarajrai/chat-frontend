@@ -1,0 +1,68 @@
+@use "../helpers/variables" as *;
+@use "../helpers/mixin" as *;
+@use "../helpers//responsive" as *;
+
+.header-container {
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+  height: 2.7rem;
+  @include small-screen {
+    max-width: 500px;
+    width: 100%;
+  }
+}
+.header-wrapper {
+  @include flex($justify: space-between);
+  width: 100%;
+  padding: 0px 1rem;
+  height: 3.2rem;
+}
+.header-searchbar {
+  @include flex($justify: space-between);
+  width: 100%;
+  &__label {
+    flex-basis: 30%;
+    @include small-screen {
+      display: none;
+    }
+    p {
+      color: white;
+      font-size: 0.8rem;
+    }
+  }
+}
+.header-searchbox {
+  position: relative;
+  width: 100%;
+}
+.header-dropdown {
+  position: absolute;
+  left: 0;
+  top: 2rem;
+  background-color: $secondary-color;
+  width: 100%;
+  border-bottom-left-radius: 10px; /* Rounded bottom-left corner */
+  border-bottom-right-radius: 10px; /* Rounded bottom-right corner */
+  padding: 0.9rem;
+  z-index: 2;
+  visibility: none;
+  opacity: 0;
+  transition: all 0.45s linear;
+  &.active {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  p {
+    font-size: 0.8rem;
+    color: white;
+    padding: 0.3rem 0.5rem;
+    border-radius: 5px;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+    &:hover {
+      background-color: rgba($accent-color, 0.4);
+    }
+  }
+}

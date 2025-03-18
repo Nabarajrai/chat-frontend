@@ -5,7 +5,10 @@
 //pages
 @use "./pages/login" as *;
 @use "./pages/register" as *;
+@use "./pages/dashboard" as *;
 
 //componets
 @use "./components/customInput" as *;
 @use "./components/button" as *;
+@use "./components//header" as *;
+@use "./components/sidebar" as *;

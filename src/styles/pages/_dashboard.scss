@@ -1,0 +1,25 @@
+@use "../helpers/variables" as *;
+@use "../helpers/mixin" as *;
+@use "../helpers/responsive" as *;
+
+.dashboard-container {
+  background-color: rgba($primary-color, 0.8);
+  width: 100%;
+  height: 100vh;
+}
+.dashboard-main-section {
+  @include flex($justify: space-between);
+}
+
+.dashboard-right {
+  width: 70px;
+}
+.dashboard-left {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px,
+    rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+  background-color: $background-color;
+  height: calc(98vh - 3rem);
+  width: 100%;
+  border-radius: 10px;
+  margin-right: 0.5rem;
+}

@@ -3,7 +3,6 @@
 
 .custom-input {
   width: 100%;
-  padding: 0.5rem;
   &.custom-input-lg {
     width: 100%;
   }
@@ -22,6 +21,7 @@
   border: 1px solid $accent-color;
   border-radius: 5px;
   padding: 0.5rem;
+  background-color: $background-color;
   transition: outline 0.11s easet;
 
   &:focus-within {

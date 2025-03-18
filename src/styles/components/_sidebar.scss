@@ -1,0 +1,8 @@
+@use "../helpers/variables" as *;
+@use "../helpers/mixin" as *;
+
+.sidebar-container {
+  @include flex($justify: center);
+  align-items: flex-start;
+  height: calc(100vh - 3rem);
+}

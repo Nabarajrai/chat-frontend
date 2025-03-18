@@ -31,9 +31,11 @@ const CustomInputComponent = ({
           placeholder=""
           className="input-group__input"
         />
-        <label htmlFor="input" className="input-group__label">
-          {label}
-        </label>
+        {label && (
+          <label htmlFor="input" className="input-group__label">
+            {label}
+          </label>
+        )}
         {icon && (
           <span
             className="input-group__icon"
