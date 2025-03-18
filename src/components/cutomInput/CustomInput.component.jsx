@@ -39,7 +39,7 @@ const CustomInputComponent = ({
         {icon && (
           <span
             className="input-group__icon"
-            onClick={id === "password" && handleShowPassword}>
+            onClick={id === "password" ? handleShowPassword : undefined}>
             {icon}
           </span>
         )}

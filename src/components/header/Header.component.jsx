@@ -1,4 +1,5 @@
-import { memo, useCallback, useMemo, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 //component
 import CustomInputComponent from "../cutomInput/CustomInput.component";
 
@@ -9,6 +10,27 @@ import classnames from "classnames";
 const HeaderComponent = () => {
   const [searchValue, setSearchValue] = useState("");
   const [show, setShow] = useState(false);
+  const dropdownRef = useRef();
+  const inputBoxRef = useRef();
+
+  const dummyData = [
+    "Dropdown1",
+    "Dropdown2",
+    "Dropdown3",
+    "Dropdown4",
+    "Apple",
+    "Banana",
+    "Orange",
+  ];
+
+  const filteredData = useMemo(() => {
+    if (!searchValue) {
+      return dummyData;
+    }
+    return dummyData.filter((item) =>
+      item.toLowerCase().includes(searchValue.toLowerCase())
+    );
+  }, [dummyData, searchValue]);
 
   const handleChange = useCallback((e) => {
     setSearchValue(e.target.value);
@@ -25,6 +47,21 @@ const HeaderComponent = () => {
   const combineClassNames = useMemo(() => {
     return classnames("header-dropdown", activeClass);
   }, [activeClass]);
+  const handleCloseOut = (e) => {
+    if (
+      dropdownRef.current &&
+      !dropdownRef.current.contains(e.target) &&
+      inputBoxRef &&
+      !inputBoxRef.current.contains(e.target)
+    ) {
+      setShow(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleCloseOut);
+    return () => document.removeEventListener("mousedown", handleCloseOut);
+  }, []);
 
   return (
     <div className="header-container">
@@ -42,12 +79,12 @@ const HeaderComponent = () => {
               onChange={handleChange}
               onFocus={handleFocused}
               icon={<FaSearch />}
+              ref={inputBoxRef}
             />
-            <div className={combineClassNames}>
-              <p>Dropdown1</p>
-              <p>Dropdown2</p>
-              <p>Dropdown3</p>
-              <p>Dropdown4</p>
+            <div className={combineClassNames} ref={dropdownRef}>
+              {filteredData.map((item, index) => (
+                <p key={index}>{item}</p>
+              ))}
             </div>
           </div>
         </div>
