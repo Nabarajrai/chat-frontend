@@ -6,3 +6,86 @@
   align-items: flex-start;
   height: calc(100vh - 3rem);
 }
+
+.sidebar-wrapper {
+  text-align: center;
+}
+.sidebar-home {
+  padding: 0.5rem;
+  &__hometab {
+    padding: 0.5rem;
+    cursor: pointer;
+    &--icon {
+      @include flex($justify: center);
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      margin: 0 auto;
+      font-size: 1.3rem;
+      transition: all 0.45s ease-in-out;
+      svg {
+        fill: $background-color;
+      }
+      &.active {
+        @include box-shadow;
+        background-color: rgba($primary-color, 0.5);
+      }
+    }
+    &--title {
+      font-size: 0.7rem;
+      span {
+        color: #ebe8e8;
+      }
+    }
+  }
+  &__dmtab {
+    padding: 0.5rem;
+    cursor: pointer;
+    &--icon {
+      @include flex($justify: center);
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      margin: 0 auto;
+      font-size: 1.3rem;
+      svg {
+        fill: $background-color;
+      }
+      &.active {
+        @include box-shadow;
+        background-color: rgba($primary-color, 0.5);
+      }
+    }
+    &--title {
+      font-size: 0.7rem;
+      span {
+        color: #ebe8e8;
+      }
+    }
+  }
+  &__notifications {
+    padding: 0.5rem;
+    cursor: pointer;
+    &--icon {
+      @include flex($justify: center);
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      margin: 0 auto;
+      font-size: 1.3rem;
+      svg {
+        fill: $background-color;
+      }
+      &.active {
+        @include box-shadow;
+        background-color: rgba($primary-color, 0.5);
+      }
+    }
+    &--title {
+      font-size: 0.7rem;
+      span {
+        color: #ebe8e8;
+      }
+    }
+  }
+}

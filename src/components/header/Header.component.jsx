@@ -13,15 +13,7 @@ const HeaderComponent = () => {
   const dropdownRef = useRef();
   const inputBoxRef = useRef();
 
-  const dummyData = [
-    "Dropdown1",
-    "Dropdown2",
-    "Dropdown3",
-    "Dropdown4",
-    "Apple",
-    "Banana",
-    "Orange",
-  ];
+  const dummyData = ["Apple", "Banana", "Orange"];
 
   const filteredData = useMemo(() => {
     if (!searchValue) {
