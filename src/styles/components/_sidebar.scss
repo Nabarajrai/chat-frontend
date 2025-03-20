@@ -1,5 +1,6 @@
 @use "../helpers/variables" as *;
 @use "../helpers/mixin" as *;
+@use "../helpers/responsive" as *;
 
 .sidebar-container {
   @include flex($justify: center);
@@ -23,6 +24,11 @@
       margin: 0 auto;
       font-size: 1.3rem;
       transition: all 0.45s ease-in-out;
+      @include small-screen {
+        width: 30px;
+        height: 30px;
+        font-size: 1rem;
+      }
       svg {
         fill: $background-color;
       }
@@ -33,6 +39,9 @@
     }
     &--title {
       font-size: 0.7rem;
+      @include small-screen {
+        display: none;
+      }
       span {
         color: #ebe8e8;
       }
@@ -48,6 +57,11 @@
       border-radius: 10px;
       margin: 0 auto;
       font-size: 1.3rem;
+      @include small-screen {
+        width: 30px;
+        height: 30px;
+        font-size: 1rem;
+      }
       svg {
         fill: $background-color;
       }
@@ -58,6 +72,9 @@
     }
     &--title {
       font-size: 0.7rem;
+      @include small-screen {
+        display: none;
+      }
       span {
         color: #ebe8e8;
       }
@@ -73,6 +90,11 @@
       border-radius: 10px;
       margin: 0 auto;
       font-size: 1.3rem;
+      @include small-screen {
+        width: 30px;
+        height: 30px;
+        font-size: 1rem;
+      }
       svg {
         fill: $background-color;
       }
@@ -83,6 +105,9 @@
     }
     &--title {
       font-size: 0.7rem;
+      @include small-screen {
+        display: none;
+      }
       span {
         color: #ebe8e8;
       }

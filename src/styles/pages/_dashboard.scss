@@ -13,6 +13,10 @@
 
 .dashboard-right {
   width: 70px;
+  transition: all 0.5s ease-in-out;
+  @include small-screen {
+    width: 50px;
+  }
 }
 .dashboard-left {
   box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px,
