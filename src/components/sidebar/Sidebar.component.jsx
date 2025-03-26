@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState, memo } from "react";
 //cions
 import { MdHomeFilled } from "react-icons/md";
 import { BiSolidMessageAlt } from "react-icons/bi";
@@ -58,4 +58,4 @@ const SidebarComponent = () => {
   );
 };
 
-export default SidebarComponent;
+export default memo(SidebarComponent);

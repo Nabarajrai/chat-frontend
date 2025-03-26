@@ -19,6 +19,8 @@
   }
 }
 .dashboard-left {
+  @include flex($justify: space-between);
+  align-items: flex-start;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px,
     rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
   background-color: $background-color;
@@ -26,4 +28,99 @@
   width: 100%;
   border-radius: 10px;
   margin-right: 0.5rem;
+}
+.dashboard-tab {
+  width: 25%;
+  height: 100%;
+  overflow: scroll;
+  border-top-left-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px,
+    rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+}
+.dashboard-content {
+  width: 85%;
+  height: 100%;
+  overflow: scroll;
+}
+.dashboard-tabs {
+  @include flex($justify: flex-start);
+  flex-direction: column;
+  padding: 0.5rem;
+  width: 100%;
+  height: 100%;
+  overflow: scroll;
+  &__room {
+    @include flex($justify: center);
+    width: 100%;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    font-size: 0.7rem;
+
+    &--title {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: white;
+      padding-left: 0.5rem;
+    }
+    &--icon {
+      @include flex($justify: center);
+      font-size: 0.7rem;
+      svg {
+        fill: white;
+      }
+    }
+  }
+  &__channel {
+    @include flex($justify: flex-start);
+    flex-direction: column;
+    width: 100%;
+    font-size: 0.7rem;
+
+    &--tab {
+      @include flex($justify: flex-start);
+      gap: 0.1rem;
+      width: 100%;
+      border-radius: 3px;
+      padding: 0.3rem 0.5rem;
+      cursor: pointer;
+
+      &:hover {
+        background-color: rgba($primary-color, 0.1);
+      }
+
+      .icon {
+        @include flex($justify: center);
+        gap: 0.5rem;
+        font-size: 0.8rem;
+      }
+    }
+    &--lists {
+      align-self: flex-start;
+      width: 100%;
+      border-radius: 3px;
+      padding: 0.3rem 0.5rem;
+      cursor: pointer;
+
+      &:hover {
+        background-color: rgba($primary-color, 0.1);
+      }
+    }
+    &--add {
+      align-self: flex-start;
+      width: 100%;
+      border-radius: 3px;
+      padding: 0.3rem 0.5rem;
+      cursor: pointer;
+
+      &:hover {
+        background-color: rgba($primary-color, 0.1);
+      }
+    }
+  }
+  &__tab {
+    align-self: flex-start;
+    font-size: 0.7rem;
+    padding-left: 0.5rem;
+  }
 }
