@@ -13,6 +13,7 @@ import ButtonComponent from "../../components/button/Button.component";
 //icons
 import { FaPlus } from "react-icons/fa";
 import { MdNavigateBefore } from "react-icons/md";
+import { FaHashtag } from "react-icons/fa6";
 
 const HomePage = () => {
   const [activeClass, setActiveClass] = useState("channels");
@@ -42,7 +43,14 @@ const HomePage = () => {
     () => classnames("tabs-lists", showDropdownClass),
     [showDropdownClass]
   );
+  const rotateClass = useMemo(() => {
+    return classnames("icon", showDropdown ? "active" : "");
+  }, [showDropdown]);
 
+  const combineActiveClass = useMemo(
+    () => classnames("dashboard-tabs__channel--tab", rotateClass),
+    [rotateClass]
+  );
   console.log("HomePage", combineClass);
   return (
     <div className="dashboard-container">
@@ -67,7 +75,7 @@ const HomePage = () => {
                 </div>
                 <div className="dashboard-tabs__channel">
                   <div
-                    className="dashboard-tabs__channel--tab"
+                    className={`${combineActiveClass}`}
                     onClick={handleShowDropdown}>
                     <span className="icon">
                       <MdNavigateBefore />
@@ -80,6 +88,9 @@ const HomePage = () => {
                         activeClass === "lists" && "active"
                       }`}
                       onClick={() => handleShowActive("lists")}>
+                      <span>
+                        <FaHashtag />
+                      </span>
                       <span>General</span>
                     </div>
                     <div
@@ -87,12 +98,50 @@ const HomePage = () => {
                         activeClass === "add" && "active"
                       }`}
                       onClick={() => handleShowActive("add")}>
-                      <span>+</span>
+                      <span>
+                        <FaPlus />
+                      </span>
                       <span>Add Channels</span>
                     </div>
                   </div>
                 </div>
-                <div className="dashboard-tabs__tab">Settings</div>
+                <div className="dashboard-tabs-dm">
+                  <div className="dashboard-tabs-dm-title">
+                    <span>
+                      <MdNavigateBefore />
+                    </span>
+                    <span>Direct Messages</span>
+                  </div>
+                  <div className="dashboard-tabs-dm-dropdown">
+                    <div className="dashboard-tabs-dm-details">
+                      <div
+                        className={`dashboard-tabs-user ${
+                          activeClass === "user" && "active"
+                        }`}
+                        onClick={() => handleShowActive("user")}>
+                        <div className="dashboard-tabs-user__avatar">
+                          <img
+                            src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50"
+                            alt=""
+                          />
+                        </div>
+                        <div className="dashboard-tabs-user__name">
+                          <span>John Doe</span>
+                        </div>
+                      </div>
+                      <div
+                        className={`dashboard-tabs-addUser ${
+                          activeClass === "invite" && "active"
+                        }`}
+                        onClick={() => handleShowActive("invite")}>
+                        <span>
+                          <FaPlus />
+                        </span>
+                        <span>Invite People </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

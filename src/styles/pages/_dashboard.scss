@@ -79,14 +79,18 @@
 
     &--tab {
       @include flex($justify: flex-start);
-      gap: 0.1rem;
+      gap: 0.3rem;
       width: 100%;
       border-radius: 3px;
       padding: 0.3rem 0.5rem;
+      transition: all 0.2s linear;
       cursor: pointer;
 
       &:hover {
         background-color: rgba($primary-color, 0.1);
+      }
+      &.active svg {
+        transform: rotate(271deg);
       }
 
       .icon {
@@ -96,7 +100,8 @@
       }
     }
     &--lists {
-      align-self: flex-start;
+      @include flex($justify: flex-start);
+      gap: 0.3rem;
       width: 100%;
       border-radius: 3px;
       padding: 0.3rem 0.5rem;
@@ -111,7 +116,8 @@
       }
     }
     &--add {
-      align-self: flex-start;
+      @include flex($justify: flex-start);
+      gap: 0.3rem;
       width: 100%;
       border-radius: 3px;
       padding: 0.3rem 0.5rem;
@@ -146,5 +152,78 @@
     height: 100%;
     visibility: visible;
     pointer-events: auto;
+  }
+}
+
+.dashboard-tabs-dm {
+  @include flex($justify: flex-start);
+  flex-direction: column;
+  width: 100%;
+}
+.dashboard-tabs-dm-title {
+  @include flex($justify: flex-start);
+  gap: 0.3rem;
+  font-size: 0.7rem;
+  width: 100%;
+  padding: 0.2px 0.5rem;
+  cursor: pointer;
+}
+
+.dashboard-tabs-dm-dropdown {
+  @include flex($justify: flex-start);
+  width: 100%;
+}
+
+.dashboard-tabs-dm-details {
+  @include flex($justify: flex-start);
+  flex-direction: column;
+  width: 100%;
+  gap: 0.3rem;
+  font-size: 0.7rem;
+}
+
+.dashboard-tabs-user {
+  @include flex($justify: flex-start);
+  width: 100%;
+  gap: 0.3rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.5px;
+  border-radius: 3px;
+
+  cursor: pointer;
+  &:hover {
+    background-color: rgba($primary-color, 0.1);
+  }
+
+  &.active {
+    background-color: rgba($primary-color, 0.4);
+  }
+  &__avatar {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    overflow: hidden;
+    img {
+      @include image();
+    }
+  }
+}
+
+.dashboard-tabs-addUser {
+  @include flex($justify: flex-start);
+  width: 100%;
+  gap: 0.3rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 3px;
+  cursor: pointer;
+  &:hover {
+    background-color: rgba($primary-color, 0.1);
+  }
+
+  &.active {
+    background-color: rgba($primary-color, 0.4);
+  }
+  span {
+    display: block;
   }
 }
