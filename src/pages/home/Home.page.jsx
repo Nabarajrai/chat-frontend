@@ -15,9 +15,16 @@ import { FaPlus } from "react-icons/fa";
 import { MdNavigateBefore } from "react-icons/md";
 import { FaHashtag } from "react-icons/fa6";
 
+//hooks
+import { useDropdown } from "../../hooks/useDropdown";
+import { useClassName } from "../../hooks/useActiveClass";
+
 const HomePage = () => {
   const [activeClass, setActiveClass] = useState("channels");
-  const [showDropdown, setShowDropdown] = useState(false);
+  const [showDropdownDm, setShowDropdownDm] = useState();
+  const { showDropdown, toggle } = useDropdown();
+  const { activeClassName, combinedClassName } = useClassName();
+
   // const { currentUser } = useContext(UserContext);
   // console.log("HomePage");
   // const handleLogOut = useCallback(() => {
@@ -30,27 +37,37 @@ const HomePage = () => {
     setActiveClass(type);
   }, []);
 
-  const handleShowDropdown = useCallback(() => {
-    setShowDropdown(!showDropdown);
-  }, [showDropdown]);
+  // const showDropdownClass = useMemo(
+  //   () => (showDropdown ? "active" : ""),
+  //   [showDropdown]
+  // );
 
-  const showDropdownClass = useMemo(
-    () => (showDropdown ? "active" : ""),
-    [showDropdown]
-  );
+  const activeClassNames = useMemo(() => {
+    return activeClassName(showDropdown, "active");
+  }, [showDropdown, activeClassName]);
 
-  const combineClass = useMemo(
-    () => classnames("tabs-lists", showDropdownClass),
-    [showDropdownClass]
-  );
+  const combineClass = combinedClassName("tabs-lists", activeClassNames);
+
   const rotateClass = useMemo(() => {
     return classnames("icon", showDropdown ? "active" : "");
   }, [showDropdown]);
 
   const combineActiveClass = useMemo(
-    () => classnames("dashboard-tabs__channel--tab", rotateClass),
-    [rotateClass]
+    () => combinedClassName("dashboard-tabs__channel--tab", rotateClass),
+    [rotateClass, combinedClassName]
   );
+
+  const handleDm = useCallback(() => {
+    setShowDropdownDm((prev) => !prev);
+  }, []);
+
+  const activeClassNameDM = activeClassName(showDropdownDm, "active");
+
+  const combineClassDM = combinedClassName(
+    "dashboard-tabs-dm-dropdown",
+    activeClassNameDM
+  );
+
   console.log("HomePage", combineClass);
   return (
     <div className="dashboard-container">
@@ -73,16 +90,15 @@ const HomePage = () => {
                     </span>
                   </ButtonComponent>
                 </div>
+
                 <div className="dashboard-tabs__channel">
-                  <div
-                    className={`${combineActiveClass}`}
-                    onClick={handleShowDropdown}>
+                  <div className={combineActiveClass} onClick={toggle}>
                     <span className="icon">
                       <MdNavigateBefore />
                     </span>
                     <span className="title">Channels</span>
                   </div>
-                  <div className={`${combineClass}`}>
+                  <div className={combineClass}>
                     <div
                       className={`dashboard-tabs__channel--lists ${
                         activeClass === "lists" && "active"
@@ -106,13 +122,13 @@ const HomePage = () => {
                   </div>
                 </div>
                 <div className="dashboard-tabs-dm">
-                  <div className="dashboard-tabs-dm-title">
+                  <div className="dashboard-tabs-dm-title" onClick={handleDm}>
                     <span>
                       <MdNavigateBefore />
                     </span>
                     <span>Direct Messages</span>
                   </div>
-                  <div className="dashboard-tabs-dm-dropdown">
+                  <div className={combineClassDM}>
                     <div className="dashboard-tabs-dm-details">
                       <div
                         className={`dashboard-tabs-user ${

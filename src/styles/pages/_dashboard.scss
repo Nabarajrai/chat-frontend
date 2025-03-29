@@ -145,13 +145,14 @@
   width: 100%;
   height: 0;
   visibility: hidden;
+  // transition: all 0.5s linear;
   pointer-events: none;
-  transition: all 0.2s linear;
 
   &.active {
     height: 100%;
     visibility: visible;
     pointer-events: auto;
+    animation: slideDownFromTop 1.5s ease-out forwards;
   }
 }
 
@@ -172,6 +173,15 @@
 .dashboard-tabs-dm-dropdown {
   @include flex($justify: flex-start);
   width: 100%;
+  height: 0;
+  pointer-events: none;
+  visibility: hidden;
+  &.active {
+    height: 100%;
+    visibility: visible;
+    pointer-events: auto;
+    animation: slideDownFromTop 1.5s ease-out forwards;
+  }
 }
 
 .dashboard-tabs-dm-details {
@@ -225,5 +235,13 @@
   }
   span {
     display: block;
+  }
+}
+@keyframes slideDownFromTop {
+  0% {
+    height: 0%;
+  }
+  100% {
+    height: 100%;
   }
 }
