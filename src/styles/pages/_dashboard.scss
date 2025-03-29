@@ -168,6 +168,14 @@
   width: 100%;
   padding: 0.2px 0.5rem;
   cursor: pointer;
+  .icon {
+    @include flex($justify: center);
+    gap: 0.5rem;
+    font-size: 0.8rem;
+  }
+  &.active svg {
+    transform: rotate(271deg);
+  }
 }
 
 .dashboard-tabs-dm-dropdown {

@@ -1,9 +1,9 @@
-import { useCallback, useContext, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import classnames from "classnames";
 //context
-import { UserContext } from "../../context";
+// import { UserContext } from "../../context";
 //helpers
-import { clearLocalStorage } from "../../helpers/LocatStorage.helper";
+// import { clearLocalStorage } from "../../helpers/LocatStorage.helper";
 
 //component
 import HeaderComponent from "../../components/header/Header.component";
@@ -25,22 +25,9 @@ const HomePage = () => {
   const { showDropdown, toggle } = useDropdown();
   const { activeClassName, combinedClassName } = useClassName();
 
-  // const { currentUser } = useContext(UserContext);
-  // console.log("HomePage");
-  // const handleLogOut = useCallback(() => {
-  //   clearLocalStorage();
-  //   window.location.href = "/";
-  // }, []);
-
   const handleShowActive = useCallback((type) => {
-    console.log("handleShowActive", type);
     setActiveClass(type);
   }, []);
-
-  // const showDropdownClass = useMemo(
-  //   () => (showDropdown ? "active" : ""),
-  //   [showDropdown]
-  // );
 
   const activeClassNames = useMemo(() => {
     return activeClassName(showDropdown, "active");
@@ -68,7 +55,14 @@ const HomePage = () => {
     activeClassNameDM
   );
 
-  console.log("HomePage", combineClass);
+  const activeClassNamesDM = activeClassName(showDropdownDm, "active");
+
+  const combineClassTitleDM = combinedClassName(
+    "dashboard-tabs-dm-title ",
+    activeClassNamesDM
+  );
+
+  console.log("HomePage");
   return (
     <div className="dashboard-container">
       <HeaderComponent />
@@ -122,8 +116,8 @@ const HomePage = () => {
                   </div>
                 </div>
                 <div className="dashboard-tabs-dm">
-                  <div className="dashboard-tabs-dm-title" onClick={handleDm}>
-                    <span>
+                  <div className={combineClassTitleDM} onClick={handleDm}>
+                    <span className="icon">
                       <MdNavigateBefore />
                     </span>
                     <span>Direct Messages</span>
