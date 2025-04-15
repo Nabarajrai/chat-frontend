@@ -160,7 +160,7 @@ const HomePage = () => {
           <div className="dashboard-content">
             <div className="dashboard-wrapper">
               <div className="dashboard-header">
-                <h1>General</h1>
+                <h1># General</h1>
               </div>
               <div className="dashboard-body">
                 <div className="dashboard-body__message">

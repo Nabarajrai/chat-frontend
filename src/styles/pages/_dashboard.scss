@@ -264,3 +264,52 @@
   left: 0;
   right: 0;
 }
+.dashboard-header {
+  font-size: 0.5rem;
+  padding: 0.5rem;
+  border-bottom: 1px solid rgba($primary-color, 0.1);
+}
+
+.dashboard-body {
+  padding: 0.5rem;
+  font-size: 0.7rem;
+  @include flex($justify: space-between);
+  align-items: center;
+  gap: 0.5rem;
+}
+.dashboard-body__message {
+  @include flex($justify: flex-start);
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 3px;
+  cursor: pointer;
+  &:hover {
+    background-color: rgba($primary-color, 0.1);
+  }
+  &__user {
+    @include flex($justify: flex-start);
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 3px;
+    cursor: pointer;
+    &:hover {
+      background-color: rgba($primary-color, 0.1);
+    }
+    &--name {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+  }
+  &--avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    overflow: hidden;
+    img {
+      @include image();
+    }
+  }
+}
