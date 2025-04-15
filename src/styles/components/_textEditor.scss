@@ -1,0 +1,40 @@
+@use "../helpers/variables" as *;
+@use "../helpers/mixin" as *;
+@use "../helpers/responsive" as *;
+
+.text-editor {
+  background-color: white;
+  padding: 0.5rem;
+  margin: 0.5rem;
+  border-radius: 0.5rem;
+}
+/* Generic rule for the text editor container */
+.editor:focus,
+.editor:active {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* If the editor uses TinyMCE and you need to target its container */
+.tox.tox-editor-container:focus,
+.tox.tox-editor-container:active {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Target the content area, if needed */
+.tox .tox-edit-area iframe:focus,
+.tox .tox-edit-area iframe:active {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.editor:focus {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  background-color: #fafafa; /* Light background to indicate focus */
+}

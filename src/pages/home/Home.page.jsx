@@ -9,6 +9,7 @@ import classnames from "classnames";
 import HeaderComponent from "../../components/header/Header.component";
 import SidebarComponent from "../../components/sidebar/Sidebar.component";
 import ButtonComponent from "../../components/button/Button.component";
+import TextEditor from "../../components/textEditor/TextEditor";
 
 //icons
 import { FaPlus } from "react-icons/fa";
@@ -155,7 +156,37 @@ const HomePage = () => {
               </div>
             </div>
           </div>
-          <div className="dashboard-content">content</div>
+          <div className="dashboard-content">
+            <div className="dashboard-wrapper">
+              <div className="dashboard-header">
+                <h1>General</h1>
+              </div>
+              <div className="dashboard-body">
+                <div className="dashboard-body__message">
+                  <div className="dashboard-body__message--user">
+                    <div className="dashboard-body__message--avatar">
+                      <img
+                        src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50"
+                        alt=""
+                      />
+                    </div>
+                    <div className="dashboard-body__message--name">
+                      <span>John Doe</span>
+                    </div>
+                  </div>
+                  <div className="dashboard-body__message--content">
+                    <p>
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Quas, voluptatem.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="dashboard-footer">
+                <TextEditor />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
