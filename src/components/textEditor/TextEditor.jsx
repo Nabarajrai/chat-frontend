@@ -1,8 +1,19 @@
-import { useRef } from "react";
+import { memo, useCallback, useRef } from "react";
+import PropTypes from "prop-types";
+//components
 import { Editor } from "@tinymce/tinymce-react";
+import ButtonComponent from "../button/Button.component";
+//icons
+import { IoSend } from "react-icons/io5";
 
-const TextEditor = () => {
+const TextEditor = ({ setValue }) => {
   const editorRef = useRef(null);
+
+  const handleEditorChange = useCallback(() => {
+    if (editorRef.current) {
+      setValue(editorRef.current.getContent());
+    }
+  }, [setValue]);
 
   return (
     <div className="text-editor">
@@ -42,8 +53,20 @@ const TextEditor = () => {
           highlight_on_focus: false,
         }}
       />
+      <div className="text-editor__btn">
+        <ButtonComponent
+          size="sm"
+          varient="primary"
+          onClick={handleEditorChange}>
+          <IoSend />
+        </ButtonComponent>
+      </div>
     </div>
   );
 };
 
-export default TextEditor;
+export default memo(TextEditor);
+
+TextEditor.propTypes = {
+  setValue: PropTypes.func.isRequired,
+};

@@ -25,6 +25,7 @@ const HomePage = () => {
   const [showDropdownDm, setShowDropdownDm] = useState();
   const { showDropdown, toggle } = useDropdown();
   const { activeClassName, combinedClassName } = useClassName();
+  const [value, setValue] = useState("");
 
   const handleShowActive = useCallback((type) => {
     setActiveClass(type);
@@ -63,7 +64,7 @@ const HomePage = () => {
     activeClassNamesDM
   );
 
-  console.log("HomePage");
+  console.log("HomePage", value);
   return (
     <div className="dashboard-container">
       <HeaderComponent />
@@ -183,7 +184,7 @@ const HomePage = () => {
                 </div>
               </div>
               <div className="dashboard-footer">
-                <TextEditor />
+                <TextEditor setValue={setValue} />
               </div>
             </div>
           </div>
