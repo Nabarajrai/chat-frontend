@@ -20,6 +20,9 @@ import { FaHashtag } from "react-icons/fa6";
 import { useDropdown } from "../../hooks/useDropdown";
 import { useClassName } from "../../hooks/useActiveClass";
 
+//helpers
+import { sanitizeHtml } from "../../helpers/SafeHtml.helper";
+
 const HomePage = () => {
   const [activeClass, setActiveClass] = useState("channels");
   const [showDropdownDm, setShowDropdownDm] = useState();
@@ -176,6 +179,13 @@ const HomePage = () => {
                     </div>
                   </div>
                   <div className="dashboard-body__message--content">
+                    <div
+                      dangerouslySetInnerHTML={{ __html: sanitizeHtml(value) }}
+                    />
+                    <p>
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Quas, voluptatem.
+                    </p>
                     <p>
                       Lorem ipsum dolor sit amet consectetur adipisicing elit.
                       Quas, voluptatem.
