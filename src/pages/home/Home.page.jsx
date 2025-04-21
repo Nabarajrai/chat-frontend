@@ -1,5 +1,7 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState, useEffect, useRef } from "react";
 import classnames from "classnames";
+import { io } from "socket.io-client";
+
 //context
 // import { UserContext } from "../../context";
 //helpers
@@ -66,6 +68,35 @@ const HomePage = () => {
     "dashboard-tabs-dm-title ",
     activeClassNamesDM
   );
+  const socketRef = useRef();
+
+  useEffect(() => {
+    socketRef.current = io("http://localhost:8080", {
+      withCredentials: true,
+    });
+
+    console.log("Attempting socket connection...");
+
+    socketRef.current.on("connect", () => {
+      console.log("✅ Connected to server");
+    });
+
+    socketRef.current.on("connect_error", (err) => {
+      console.error("❌ Connection error:", err.message);
+    });
+
+    socketRef.current.on("message", (msg) => {
+      console.log("📩 Message received:", JSON.stringify(msg));
+    });
+
+    return () => {
+      socketRef.current.disconnect();
+    };
+  }, []);
+
+  const sendMessage = () => {
+    socketRef.current.emit("message", { text: "Hello from client!" });
+  };
 
   console.log("HomePage", value);
   return (
@@ -194,7 +225,7 @@ const HomePage = () => {
                 </div>
               </div>
               <div className="dashboard-footer">
-                <TextEditor setValue={setValue} />
+                <TextEditor setValue={setValue} sendMessage={sendMessage} />
               </div>
             </div>
           </div>

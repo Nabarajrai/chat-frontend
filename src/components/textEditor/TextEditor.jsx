@@ -6,14 +6,15 @@ import ButtonComponent from "../button/Button.component";
 //icons
 import { IoSend } from "react-icons/io5";
 
-const TextEditor = ({ setValue }) => {
+const TextEditor = ({ setValue, sendMessage }) => {
   const editorRef = useRef(null);
 
   const handleEditorChange = useCallback(() => {
     if (editorRef.current) {
       setValue(editorRef.current.getContent());
+      sendMessage();
     }
-  }, [setValue]);
+  }, [setValue, sendMessage]);
 
   return (
     <div className="text-editor">
@@ -69,4 +70,5 @@ export default memo(TextEditor);
 
 TextEditor.propTypes = {
   setValue: PropTypes.func.isRequired,
+  sendMessage: PropTypes.func,
 };
