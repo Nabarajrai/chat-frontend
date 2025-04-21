@@ -95,7 +95,7 @@ const HomePage = () => {
   }, []);
 
   const sendMessage = () => {
-    socketRef.current.emit("message", { text: "Hello from client!" });
+    socketRef.current.emit("message", { text: value });
   };
 
   console.log("HomePage", value);
