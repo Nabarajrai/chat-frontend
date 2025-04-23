@@ -1,6 +1,5 @@
-import { useCallback, useMemo, useState, useEffect, useRef } from "react";
+import { useCallback, useMemo, useState } from "react";
 import classnames from "classnames";
-import { io } from "socket.io-client";
 
 //context
 // import { UserContext } from "../../context";
@@ -24,6 +23,7 @@ import { useClassName } from "../../hooks/useActiveClass";
 
 //helpers
 import { sanitizeHtml } from "../../helpers/SafeHtml.helper";
+import { useSocket } from "../../hooks/useSocket";
 
 const HomePage = () => {
   const [activeClass, setActiveClass] = useState("channels");
@@ -31,6 +31,8 @@ const HomePage = () => {
   const { showDropdown, toggle } = useDropdown();
   const { activeClassName, combinedClassName } = useClassName();
   const [value, setValue] = useState("");
+
+  const socket = useSocket(setValue);
 
   const handleShowActive = useCallback((type) => {
     setActiveClass(type);
@@ -68,34 +70,10 @@ const HomePage = () => {
     "dashboard-tabs-dm-title ",
     activeClassNamesDM
   );
-  const socketRef = useRef();
-
-  useEffect(() => {
-    socketRef.current = io("http://localhost:8080", {
-      withCredentials: true,
-    });
-
-    console.log("Attempting socket connection...");
-
-    socketRef.current.on("connect", () => {
-      console.log("✅ Connected to server");
-    });
-
-    socketRef.current.on("connect_error", (err) => {
-      console.error("❌ Connection error:", err.message);
-    });
-
-    socketRef.current.on("message", (msg) => {
-      console.log("📩 Message received:", JSON.stringify(msg));
-    });
-
-    return () => {
-      socketRef.current.disconnect();
-    };
-  }, []);
 
   const sendMessage = () => {
-    socketRef.current.emit("message", { text: value });
+    socket.emit("message", { text: value });
+    console.log("Message sent", value);
   };
 
   console.log("HomePage", value);
