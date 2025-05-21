@@ -6,16 +6,16 @@ import ButtonComponent from "../button/Button.component";
 //icons
 import { IoSend } from "react-icons/io5";
 
-const TextEditor = ({ setValue, sendMessage }) => {
+const TextEditor = ({ sendMessage }) => {
   const editorRef = useRef(null);
 
   const handleEditorChange = useCallback(() => {
     if (editorRef.current) {
       const content = editorRef.current.getContent();
-      setValue(content);
       sendMessage(content);
+      editorRef.current.setContent("");
     }
-  }, [setValue, sendMessage]);
+  }, [sendMessage]);
 
   return (
     <div className="text-editor">
@@ -59,7 +59,7 @@ const TextEditor = ({ setValue, sendMessage }) => {
                 e.preventDefault();
                 const content = editor.getContent();
                 sendMessage(content);
-                setValue("");
+                editor.setContent("");
               }
             });
           },

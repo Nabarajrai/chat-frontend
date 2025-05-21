@@ -32,7 +32,6 @@ const HomePage = () => {
   const [showDropdownDm, setShowDropdownDm] = useState();
   const { showDropdown, toggle } = useDropdown();
   const { activeClassName, combinedClassName } = useClassName();
-  const [value, setValue] = useState("");
 
   const { currentUser } = useContext(UserContext);
 
@@ -192,11 +191,12 @@ const HomePage = () => {
                   </div>
                   <div className="dashboard-body__message--content">
                     {messages.map((msg) => {
+                      console.log("ems", msg);
                       return (
-                        <div key={msg?.message?.id}>
+                        <div key={msg?.id}>
                           <div
                             dangerouslySetInnerHTML={{
-                              __html: sanitizeHtml(msg?.message?.data),
+                              __html: sanitizeHtml(msg?.data),
                             }}
                           />
                         </div>
@@ -214,7 +214,7 @@ const HomePage = () => {
                 </div>
               </div>
               <div className="dashboard-footer">
-                <TextEditor setValue={setValue} sendMessage={sendMessage} />
+                <TextEditor sendMessage={sendMessage} />
               </div>
             </div>
           </div>
