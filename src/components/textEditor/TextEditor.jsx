@@ -11,8 +11,9 @@ const TextEditor = ({ setValue, sendMessage }) => {
 
   const handleEditorChange = useCallback(() => {
     if (editorRef.current) {
-      setValue(editorRef.current.getContent());
-      sendMessage();
+      const content = editorRef.current.getContent();
+      setValue(content);
+      sendMessage(content);
     }
   }, [setValue, sendMessage]);
 
@@ -52,6 +53,16 @@ const TextEditor = ({ setValue, sendMessage }) => {
 
           statusbar: false,
           highlight_on_focus: false,
+          setup: (editor) => {
+            editor.on("keydown", (e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                const content = editor.getContent();
+                sendMessage(content);
+                setValue("");
+              }
+            });
+          },
         }}
       />
       <div className="text-editor__btn">

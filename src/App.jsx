@@ -2,11 +2,14 @@ import { RouterProvider } from "react-router";
 import { routes } from "./routes/Routes";
 //context
 import { CurrentUserProvider } from "./context";
+import { MessageProvider } from "./context/message/Message.provider";
 function App() {
   return (
     <>
       <CurrentUserProvider>
-        <RouterProvider router={routes} />
+        <MessageProvider>
+          <RouterProvider router={routes} />
+        </MessageProvider>
       </CurrentUserProvider>
     </>
   );

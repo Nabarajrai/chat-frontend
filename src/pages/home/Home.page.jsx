@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState, useContext } from "react";
 import classnames from "classnames";
 
 //context
@@ -24,6 +24,8 @@ import { useClassName } from "../../hooks/useActiveClass";
 //helpers
 import { sanitizeHtml } from "../../helpers/SafeHtml.helper";
 import { useSocket } from "../../hooks/useSocket";
+import { useMessageContext } from "../../context/message/Message.context";
+import { UserContext } from "../../context/User.context";
 
 const HomePage = () => {
   const [activeClass, setActiveClass] = useState("channels");
@@ -32,7 +34,10 @@ const HomePage = () => {
   const { activeClassName, combinedClassName } = useClassName();
   const [value, setValue] = useState("");
 
-  const socket = useSocket(setValue);
+  const { currentUser } = useContext(UserContext);
+
+  const socket = useSocket(currentUser?.userId);
+  const { messages } = useMessageContext();
 
   const handleShowActive = useCallback((type) => {
     setActiveClass(type);
@@ -71,12 +76,10 @@ const HomePage = () => {
     activeClassNamesDM
   );
 
-  const sendMessage = () => {
-    socket.emit("message", { text: value });
-    console.log("Message sent", value);
+  const sendMessage = (content) => {
+    socket.emit("message", content);
   };
 
-  console.log("HomePage", value);
   return (
     <div className="dashboard-container">
       <HeaderComponent />
@@ -188,9 +191,17 @@ const HomePage = () => {
                     </div>
                   </div>
                   <div className="dashboard-body__message--content">
-                    <div
-                      dangerouslySetInnerHTML={{ __html: sanitizeHtml(value) }}
-                    />
+                    {messages.map((msg) => {
+                      return (
+                        <div key={msg?.message?.id}>
+                          <div
+                            dangerouslySetInnerHTML={{
+                              __html: sanitizeHtml(msg?.message?.data),
+                            }}
+                          />
+                        </div>
+                      );
+                    })}
                     <p>
                       Lorem ipsum dolor sit amet consectetur adipisicing elit.
                       Quas, voluptatem.
