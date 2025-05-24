@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useEffect } from "react";
 import classnames from "classnames";
 
 //components
@@ -12,14 +12,24 @@ import { useClassName } from "../../hooks/useActiveClass";
 import { FaPlus } from "react-icons/fa";
 import { MdNavigateBefore } from "react-icons/md";
 import { FaHashtag } from "react-icons/fa6";
+
+//helpers
+import { api, APIS } from "../../config/Api.config";
 const LeftTabsComponent = () => {
   const [activeClass, setActiveClass] = useState("channels");
+  const [activeUserId, setActiveUserId] = useState(null);
+  const [users, setUsers] = useState([]);
 
   const [showDropdownDm, setShowDropdownDm] = useState();
 
   const { showDropdown, toggle } = useDropdown();
 
   const { activeClassName, combinedClassName } = useClassName();
+
+  const activeUserIdHandler = useCallback((userId) => {
+    setActiveUserId(userId);
+    setActiveClass("");
+  }, []);
 
   const activeClassNames = useMemo(() => {
     return activeClassName(showDropdown, "active");
@@ -38,6 +48,7 @@ const LeftTabsComponent = () => {
 
   const handleShowActive = useCallback((type) => {
     setActiveClass(type);
+    setActiveUserId(null);
   }, []);
   const activeClassNamesDM = activeClassName(showDropdownDm, "active");
 
@@ -54,6 +65,25 @@ const LeftTabsComponent = () => {
   const handleDm = useCallback(() => {
     setShowDropdownDm((prev) => !prev);
   }, []);
+
+  const getUsers = useCallback(async () => {
+    try {
+      const res = await api(APIS.users, "GET");
+      if (res?.status === "success") {
+        setUsers(res?.data);
+      } else {
+        console.error(res?.message);
+      }
+    } catch (e) {
+      console.error("Error fetching users:", e);
+    }
+  }, []);
+
+  useEffect(() => {
+    getUsers();
+  }, [getUsers]);
+
+  console.log("users", users);
   return (
     <div className="dashboard-tab">
       <div className="dashboard-tab-lists">
@@ -104,23 +134,29 @@ const LeftTabsComponent = () => {
               </span>
               <span>Direct Messages</span>
             </div>
+
             <div className={combineClassDM}>
               <div className="dashboard-tabs-dm-details">
-                <div
-                  className={`dashboard-tabs-user ${
-                    activeClass === "user" && "active"
-                  }`}
-                  onClick={() => handleShowActive("user")}>
-                  <div className="dashboard-tabs-user__avatar">
-                    <img
-                      src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50"
-                      alt=""
-                    />
-                  </div>
-                  <div className="dashboard-tabs-user__name">
-                    <span>John Doe</span>
-                  </div>
-                </div>
+                {users.map((user) => (
+                  <>
+                    <div
+                      className={`dashboard-tabs-user ${
+                        activeUserId === user.userId && "active"
+                      }`}
+                      onClick={() => activeUserIdHandler(user?.userId)}>
+                      <div className="dashboard-tabs-user__avatar">
+                        <img
+                          src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50"
+                          alt=""
+                        />
+                      </div>
+                      <div className="dashboard-tabs-user__name">
+                        <span>{user.firstName + " " + user.lastName}</span>
+                      </div>
+                    </div>
+                  </>
+                ))}
+
                 <div
                   className={`dashboard-tabs-addUser ${
                     activeClass === "invite" && "active"

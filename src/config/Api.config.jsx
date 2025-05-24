@@ -8,4 +8,5 @@ export const APIS = {
   login: "/api/auth/login",
   register: "/api/auth/register",
   logout: "/api/auth/logOut",
+  users: "/api/users",
 };
