@@ -8,13 +8,11 @@ import MessageComponent from "../../components/message/Message.component";
 import LeftTabsComponent from "../../components/leftTabs/LeftTabs.component";
 //helpers
 import { useSocket } from "../../hooks/useSocket";
-import { useMessageContext } from "../../context/message/Message.context";
 import { UserContext } from "../../context/User.context";
 
 const HomePage = () => {
   const { currentUser } = useContext(UserContext);
   const socket = useSocket(currentUser?.userId);
-  const { messages } = useMessageContext();
   const sendMessage = useCallback(
     (content) => {
       socket.emit("message", content);
@@ -32,7 +30,7 @@ const HomePage = () => {
         <div className="dashboard-left  ">
           <LeftTabsComponent />
           <div className="dashboard-content">
-            <MessageComponent messages={messages} />
+            <MessageComponent />
             <div className="dashboard-footer">
               <TextEditor sendMessage={sendMessage} />
             </div>

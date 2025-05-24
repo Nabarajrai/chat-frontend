@@ -1,7 +1,10 @@
-import PropTypes from "prop-types";
+import { memo } from "react";
 //helpers
 import { sanitizeHtml } from "../../helpers/SafeHtml.helper";
-const MessageComponent = ({ messages }) => {
+import { useMessageContext } from "../../context/message/Message.context";
+
+const MessageComponent = () => {
+  const { messages } = useMessageContext();
   return (
     <div className="content-section">
       <div className="dashboard-header">
@@ -22,7 +25,6 @@ const MessageComponent = ({ messages }) => {
           </div>
           <div className="dashboard-body__message--content">
             {messages.map((msg) => {
-              console.log("ems", msg);
               return (
                 <div key={msg?.id}>
                   <div
@@ -48,13 +50,4 @@ const MessageComponent = ({ messages }) => {
   );
 };
 
-export default MessageComponent;
-
-MessageComponent.propTypes = {
-  messages: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      data: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-};
+export default memo(MessageComponent);
