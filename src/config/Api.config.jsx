@@ -9,4 +9,5 @@ export const APIS = {
   register: "/api/auth/register",
   logout: "/api/auth/logOut",
   users: "/api/users",
+  channels: "/api/channels",
 };

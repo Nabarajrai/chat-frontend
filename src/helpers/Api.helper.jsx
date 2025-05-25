@@ -22,7 +22,6 @@ export const apiGenerator = ({ baseURL }) => {
     }
     try {
       const response = await axios(config);
-      console.log("response", response);
       return response.data;
     } catch (e) {
       console.log(e);

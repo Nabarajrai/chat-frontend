@@ -15,21 +15,42 @@ import { FaHashtag } from "react-icons/fa6";
 
 //helpers
 import { api, APIS } from "../../config/Api.config";
+//contexts
+
+import { useTabsContext } from "../../context/tabs/Tabs.context";
+
 const LeftTabsComponent = () => {
   const [activeClass, setActiveClass] = useState("channels");
   const [activeUserId, setActiveUserId] = useState(null);
+  const [activeChannelId, setActiveChannelId] = useState(null);
   const [users, setUsers] = useState([]);
-
+  const [channels, setChannels] = useState([]);
   const [showDropdownDm, setShowDropdownDm] = useState();
 
   const { showDropdown, toggle } = useDropdown();
 
   const { activeClassName, combinedClassName } = useClassName();
+  const { handleTabChangeName } = useTabsContext();
 
-  const activeUserIdHandler = useCallback((userId) => {
-    setActiveUserId(userId);
-    setActiveClass("");
-  }, []);
+  const activeUserIdHandler = useCallback(
+    (user) => {
+      setActiveUserId(user?.userId);
+      handleTabChangeName(`${user?.firstName} ${user?.lastName}`);
+      setActiveClass("");
+      setActiveChannelId(null);
+    },
+    [handleTabChangeName]
+  );
+
+  const activeChannelHandler = useCallback(
+    (channel) => {
+      handleTabChangeName(channel?.name);
+      setActiveChannelId(channel?.id);
+      setActiveClass("");
+      setActiveUserId(null);
+    },
+    [handleTabChangeName]
+  );
 
   const activeClassNames = useMemo(() => {
     return activeClassName(showDropdown, "active");
@@ -79,11 +100,27 @@ const LeftTabsComponent = () => {
     }
   }, []);
 
+  const getChannels = useCallback(async () => {
+    try {
+      const res = await api(APIS.channels, "GET");
+      if (res?.status === "success") {
+        setChannels(res?.data);
+      } else {
+        console.error(res?.message);
+      }
+    } catch (e) {
+      console.error("Error fetching channels:", e);
+    }
+  }, []);
+
   useEffect(() => {
     getUsers();
   }, [getUsers]);
 
-  console.log("users", users);
+  useEffect(() => {
+    getChannels();
+  }, [getChannels]);
+
   return (
     <div className="dashboard-tab">
       <div className="dashboard-tab-lists">
@@ -105,16 +142,21 @@ const LeftTabsComponent = () => {
               <span className="title">Channels</span>
             </div>
             <div className={combineClass}>
-              <div
-                className={`dashboard-tabs__channel--lists ${
-                  activeClass === "lists" && "active"
-                }`}
-                onClick={() => handleShowActive("lists")}>
-                <span>
-                  <FaHashtag />
-                </span>
-                <span>General</span>
-              </div>
+              {channels.map((channel) => (
+                <>
+                  <div
+                    className={`dashboard-tabs__channel--lists ${
+                      channel.id === activeChannelId && "active"
+                    }`}
+                    onClick={() => activeChannelHandler(channel)}>
+                    <span>
+                      <FaHashtag />
+                    </span>
+                    <span>{channel?.name}</span>
+                  </div>
+                </>
+              ))}
+
               <div
                 className={`dashboard-tabs__channel--add ${
                   activeClass === "add" && "active"
@@ -143,7 +185,7 @@ const LeftTabsComponent = () => {
                       className={`dashboard-tabs-user ${
                         activeUserId === user.userId && "active"
                       }`}
-                      onClick={() => activeUserIdHandler(user?.userId)}>
+                      onClick={() => activeUserIdHandler(user)}>
                       <div className="dashboard-tabs-user__avatar">
                         <img
                           src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50"
@@ -151,7 +193,7 @@ const LeftTabsComponent = () => {
                         />
                       </div>
                       <div className="dashboard-tabs-user__name">
-                        <span>{user.firstName + " " + user.lastName}</span>
+                        <span>{`${user.firstName} ${user.lastName}`}</span>
                       </div>
                     </div>
                   </>

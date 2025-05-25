@@ -2,13 +2,16 @@ import { memo } from "react";
 //helpers
 import { sanitizeHtml } from "../../helpers/SafeHtml.helper";
 import { useMessageContext } from "../../context/message/Message.context";
+import { useTabsContext } from "../../context/tabs/Tabs.context";
 
 const MessageComponent = () => {
   const { messages } = useMessageContext();
+  const { tabName } = useTabsContext();
+  console.log("tabName", tabName);
   return (
     <div className="content-section">
       <div className="dashboard-header">
-        <h1># General</h1>
+        <h1># {tabName}</h1>
       </div>
       <div className="dashboard-body-content">
         <div className="dashboard-body">
