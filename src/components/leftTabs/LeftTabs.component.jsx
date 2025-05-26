@@ -26,6 +26,8 @@ const LeftTabsComponent = () => {
   const [users, setUsers] = useState([]);
   const [channels, setChannels] = useState([]);
   const [showDropdownDm, setShowDropdownDm] = useState();
+  const [isLoadingUser, setIsLoadingUser] = useState(false);
+  const [isLoadingChannel, setIsLoadingChannel] = useState(false);
 
   const { showDropdown, toggle } = useDropdown();
 
@@ -70,6 +72,7 @@ const LeftTabsComponent = () => {
   const handleShowActive = useCallback((type) => {
     setActiveClass(type);
     setActiveUserId(null);
+    setActiveChannelId(null);
   }, []);
   const activeClassNamesDM = activeClassName(showDropdownDm, "active");
 
@@ -88,28 +91,38 @@ const LeftTabsComponent = () => {
   }, []);
 
   const getUsers = useCallback(async () => {
+    setIsLoadingUser(true);
     try {
       const res = await api(APIS.users, "GET");
       if (res?.status === "success") {
         setUsers(res?.data);
+        setIsLoadingUser(false);
       } else {
         console.error(res?.message);
       }
     } catch (e) {
       console.error("Error fetching users:", e);
+    } finally {
+      setIsLoadingUser(false);
     }
   }, []);
 
   const getChannels = useCallback(async () => {
+    setIsLoadingChannel(true);
     try {
       const res = await api(APIS.channels, "GET");
       if (res?.status === "success") {
         setChannels(res?.data);
+        setIsLoadingChannel(false);
       } else {
         console.error(res?.message);
       }
     } catch (e) {
       console.error("Error fetching channels:", e);
+    } finally {
+      {
+        setIsLoadingChannel(false);
+      }
     }
   }, []);
 
@@ -142,20 +155,22 @@ const LeftTabsComponent = () => {
               <span className="title">Channels</span>
             </div>
             <div className={combineClass}>
-              {channels.map((channel) => (
-                <>
-                  <div
-                    className={`dashboard-tabs__channel--lists ${
-                      channel.id === activeChannelId && "active"
-                    }`}
-                    onClick={() => activeChannelHandler(channel)}>
-                    <span>
-                      <FaHashtag />
-                    </span>
-                    <span>{channel?.name}</span>
-                  </div>
-                </>
-              ))}
+              {isLoadingUser
+                ? "Loading..."
+                : channels.map((channel) => (
+                    <>
+                      <div
+                        className={`dashboard-tabs__channel--lists ${
+                          channel.id === activeChannelId && "active"
+                        }`}
+                        onClick={() => activeChannelHandler(channel)}>
+                        <span>
+                          <FaHashtag />
+                        </span>
+                        <span>{channel?.name}</span>
+                      </div>
+                    </>
+                  ))}
 
               <div
                 className={`dashboard-tabs__channel--add ${
@@ -179,25 +194,27 @@ const LeftTabsComponent = () => {
 
             <div className={combineClassDM}>
               <div className="dashboard-tabs-dm-details">
-                {users.map((user) => (
-                  <>
-                    <div
-                      className={`dashboard-tabs-user ${
-                        activeUserId === user.userId && "active"
-                      }`}
-                      onClick={() => activeUserIdHandler(user)}>
-                      <div className="dashboard-tabs-user__avatar">
-                        <img
-                          src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50"
-                          alt=""
-                        />
-                      </div>
-                      <div className="dashboard-tabs-user__name">
-                        <span>{`${user.firstName} ${user.lastName}`}</span>
-                      </div>
-                    </div>
-                  </>
-                ))}
+                {isLoadingChannel
+                  ? "Loading..."
+                  : users.map((user) => (
+                      <>
+                        <div
+                          className={`dashboard-tabs-user ${
+                            activeUserId === user.userId && "active"
+                          }`}
+                          onClick={() => activeUserIdHandler(user)}>
+                          <div className="dashboard-tabs-user__avatar">
+                            <img
+                              src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50"
+                              alt=""
+                            />
+                          </div>
+                          <div className="dashboard-tabs-user__name">
+                            <span>{`${user.firstName} ${user.lastName}`}</span>
+                          </div>
+                        </div>
+                      </>
+                    ))}
 
                 <div
                   className={`dashboard-tabs-addUser ${
