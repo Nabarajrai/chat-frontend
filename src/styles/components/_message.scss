@@ -1,0 +1,68 @@
+@use "../helpers/variables" as *;
+@use "../helpers/mixin" as *;
+
+.message-section {
+  flex: 1;
+  width: 100%;
+  overflow-y: auto;
+}
+.message-header {
+  position: absolute;
+  width: 100%;
+  font-size: 0.5rem;
+  padding: 0.5rem;
+  border-bottom: 1px solid rgba($primary-color, 0.1);
+  z-index: 3;
+  background-color: $background-color;
+  border-left: 1px solid rgba($primary-color, 0.1);
+}
+.message-lists {
+  padding-top: 3.2rem;
+}
+
+.message-wrapper {
+  padding: 0.5rem 1rem 0.5rem 1.5rem;
+  font-size: 0.7rem;
+  @include flex($justify: flex-start);
+  gap: 0.5rem;
+  overflow-y: scroll;
+}
+
+.message-user {
+  @include flex($justify: flex-start);
+  flex-direction: column;
+  gap: 0.4rem;
+  width: auto;
+  border-radius: 3px;
+  cursor: pointer;
+  &__name {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 600;
+  }
+  &__avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    overflow: hidden;
+    img {
+      @include image();
+    }
+  }
+}
+.message-body-wrapper {
+  @include flex($justify: flex-start);
+  flex-direction: column;
+  width: 100%;
+  gap: 0.3rem;
+  font-size: 0.7rem;
+}
+.message-body {
+  @include flex($justify: flex-start);
+  flex-direction: row;
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 3px;
+  font-size: 0.7rem;
+  line-height: 1.2rem;
+}
