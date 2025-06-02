@@ -17,6 +17,7 @@ const MessageComponent = () => {
       ],
       receiverId: 1,
       senderId: 2,
+      senderName: "Nabaraj Rai",
     },
     {
       id: 2,
@@ -27,6 +28,7 @@ const MessageComponent = () => {
       ],
       receiverId: 2,
       senderId: 2,
+      senderName: "Saroj Rai",
     },
     {
       id: 3,
@@ -37,6 +39,7 @@ const MessageComponent = () => {
       ],
       receiverId: 1,
       senderId: 2,
+      senderName: "Kamala Rai",
     },
     {
       id: 3,
@@ -47,6 +50,7 @@ const MessageComponent = () => {
       ],
       receiverId: 1,
       senderId: 2,
+      senderName: "Bipana Rai",
     },
     {
       id: 3,
@@ -57,6 +61,7 @@ const MessageComponent = () => {
       ],
       receiverId: 1,
       senderId: 2,
+      senderName: "Sanam Rai",
     },
   ]);
   console.log("tabName", tabName);
@@ -76,24 +81,24 @@ const MessageComponent = () => {
                     alt=""
                   />
                 </div>
-                <div className="message-user__name">
-                  <span>John Doe</span>
-                </div>
               </div>
-              <div className="message-body-wrapper">
-                {msg.data.map((message) => (
-                  <div
-                    key={message.messageId}
-                    className={`message-body ${
-                      message.isEdited ? "edited" : ""
-                    }`}>
+              <div className="message-user-container">
+                <div className="message-user-name">{msg?.senderName}</div>
+                <div className="message-body-wrapper">
+                  {msg.data.map((message) => (
                     <div
-                      dangerouslySetInnerHTML={{
-                        __html: sanitizeHtml(message.text),
-                      }}
-                    />
-                  </div>
-                ))}
+                      key={message.messageId}
+                      className={`message-body ${
+                        message.isEdited ? "edited" : ""
+                      }`}>
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: sanitizeHtml(message.text),
+                        }}
+                      />
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           );

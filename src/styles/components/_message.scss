@@ -21,7 +21,7 @@
 }
 
 .message-wrapper {
-  padding: 0.5rem 1rem 0.5rem 1.5rem;
+  padding: 0.5rem 1rem 0.5rem 1.2rem;
   font-size: 0.7rem;
   @include flex($justify: flex-start);
   gap: 0.5rem;
@@ -29,11 +29,9 @@
 }
 
 .message-user {
-  @include flex($justify: flex-start);
-  flex-direction: column;
-  gap: 0.4rem;
-  width: auto;
+  align-self: flex-start;
   border-radius: 3px;
+  width: auto;
   cursor: pointer;
   &__name {
     display: block;
@@ -64,5 +62,11 @@
   padding: 0.5rem;
   border-radius: 3px;
   font-size: 0.7rem;
-  line-height: 1.2rem;
+  line-height: 0.1rem;
+}
+.message-user-name {
+  padding: 0px 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
 }
