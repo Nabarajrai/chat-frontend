@@ -1,4 +1,4 @@
-import { useCallback, useContext } from "react";
+import { useCallback, useContext, useState } from "react";
 
 //component
 import HeaderComponent from "../../components/header/Header.component";
@@ -9,15 +9,26 @@ import LeftTabsComponent from "../../components/leftTabs/LeftTabs.component";
 //helpers
 import { useSocket } from "../../hooks/useSocket";
 import { UserContext } from "../../context/User.context";
-
+//contexts
+import { useMessageContext } from "../../context/message/Message.context";
 const HomePage = () => {
+  const [activeTabId, setActiveTabId] = useState(null);
   const { currentUser } = useContext(UserContext);
+  const { messages } = useMessageContext();
+  console.log("Messages:", messages);
   const socket = useSocket(currentUser?.userId);
-  const sendMessage = useCallback(
-    (content) => {
-      socket.emit("message", content);
+  const sendMessageToUser = useCallback(
+    (message) => {
+      console.log("Sending message:", message);
+      if (currentUser && activeTabId) {
+        socket.emit("send-message-to-user", {
+          senderId: currentUser.userId,
+          receiverId: activeTabId,
+          message: message,
+        });
+      }
     },
-    [socket]
+    [socket, activeTabId, currentUser]
   );
 
   return (
@@ -28,11 +39,11 @@ const HomePage = () => {
           <SidebarComponent />
         </div>
         <div className="dashboard-left  ">
-          <LeftTabsComponent />
+          <LeftTabsComponent setActiveTabId={setActiveTabId} />
           <div className="dashboard-content">
             <MessageComponent />
             <div className="dashboard-footer">
-              <TextEditor sendMessage={sendMessage} />
+              <TextEditor sendMessage={sendMessageToUser} />
             </div>
           </div>
         </div>

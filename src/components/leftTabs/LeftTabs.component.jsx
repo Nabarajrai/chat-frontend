@@ -7,6 +7,7 @@ import ButtonComponent from "../button/Button.component";
 //hooks
 import { useDropdown } from "../../hooks/useDropdown";
 import { useClassName } from "../../hooks/useActiveClass";
+import { useSocket } from "../../hooks/useSocket";
 
 //icons
 import { FaPlus } from "react-icons/fa";
@@ -19,7 +20,7 @@ import { api, APIS } from "../../config/Api.config";
 
 import { useTabsContext } from "../../context/tabs/Tabs.context";
 
-const LeftTabsComponent = () => {
+const LeftTabsComponent = ({ setActiveTabId }) => {
   const [activeClass, setActiveClass] = useState("channels");
   const [activeUserId, setActiveUserId] = useState(null);
   const [activeChannelId, setActiveChannelId] = useState(null);
@@ -28,20 +29,30 @@ const LeftTabsComponent = () => {
   const [showDropdownDm, setShowDropdownDm] = useState();
   const [isLoadingUser, setIsLoadingUser] = useState(false);
   const [isLoadingChannel, setIsLoadingChannel] = useState(false);
+  const socket = useSocket();
 
   const { showDropdown, toggle } = useDropdown();
 
   const { activeClassName, combinedClassName } = useClassName();
   const { handleTabChangeName } = useTabsContext();
 
+  const joinUser = useCallback(
+    (userId) => {
+      socket.emit("join-user", userId);
+    },
+    [socket]
+  );
+
   const activeUserIdHandler = useCallback(
     (user) => {
       setActiveUserId(user?.userId);
       handleTabChangeName(`${user?.firstName} ${user?.lastName}`);
+      joinUser(user?.userId);
+      setActiveTabId(user?.userId);
       setActiveClass("");
       setActiveChannelId(null);
     },
-    [handleTabChangeName]
+    [handleTabChangeName, joinUser, setActiveTabId]
   );
 
   const activeChannelHandler = useCallback(
