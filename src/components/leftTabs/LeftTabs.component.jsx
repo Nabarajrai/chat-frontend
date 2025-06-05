@@ -20,7 +20,7 @@ import { api, APIS } from "../../config/Api.config";
 
 import { useTabsContext } from "../../context/tabs/Tabs.context";
 
-const LeftTabsComponent = ({ setActiveTabId }) => {
+const LeftTabsComponent = () => {
   const [activeClass, setActiveClass] = useState("channels");
   const [activeUserId, setActiveUserId] = useState(null);
   const [activeChannelId, setActiveChannelId] = useState(null);
@@ -34,7 +34,7 @@ const LeftTabsComponent = ({ setActiveTabId }) => {
   const { showDropdown, toggle } = useDropdown();
 
   const { activeClassName, combinedClassName } = useClassName();
-  const { handleTabChangeName } = useTabsContext();
+  const { handleTabChangeName, handleActiveTabIdChange } = useTabsContext();
 
   const joinUser = useCallback(
     (userId) => {
@@ -48,11 +48,11 @@ const LeftTabsComponent = ({ setActiveTabId }) => {
       setActiveUserId(user?.userId);
       handleTabChangeName(`${user?.firstName} ${user?.lastName}`);
       joinUser(user?.userId);
-      setActiveTabId(user?.userId);
+      handleActiveTabIdChange(user?.userId);
       setActiveClass("");
       setActiveChannelId(null);
     },
-    [handleTabChangeName, joinUser, setActiveTabId]
+    [handleTabChangeName, joinUser, handleActiveTabIdChange]
   );
 
   const activeChannelHandler = useCallback(

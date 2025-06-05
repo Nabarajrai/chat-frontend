@@ -11,12 +11,13 @@ import { useSocket } from "../../hooks/useSocket";
 import { UserContext } from "../../context/User.context";
 //contexts
 import { useMessageContext } from "../../context/message/Message.context";
+import { useTabsContext } from "../../context/tabs/Tabs.context";
 const HomePage = () => {
-  const [activeTabId, setActiveTabId] = useState(null);
   const { currentUser } = useContext(UserContext);
   const { messages } = useMessageContext();
   console.log("Messages:", messages);
   const socket = useSocket(currentUser?.userId);
+  const { activeTabId } = useTabsContext();
   const sendMessageToUser = useCallback(
     (message) => {
       console.log("Sending message:", message);
@@ -39,7 +40,7 @@ const HomePage = () => {
           <SidebarComponent />
         </div>
         <div className="dashboard-left  ">
-          <LeftTabsComponent setActiveTabId={setActiveTabId} />
+          <LeftTabsComponent />
           <div className="dashboard-content">
             <MessageComponent />
             <div className="dashboard-footer">
