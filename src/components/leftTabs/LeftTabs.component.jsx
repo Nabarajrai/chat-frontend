@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo, useEffect } from "react";
+import { useState, useCallback, useMemo, useEffect, useContext } from "react";
 import classnames from "classnames";
 
 //components
@@ -17,7 +17,7 @@ import { FaHashtag } from "react-icons/fa6";
 //helpers
 import { api, APIS } from "../../config/Api.config";
 //contexts
-
+import { UserContext } from "../../context/User.context";
 import { useTabsContext } from "../../context/tabs/Tabs.context";
 
 const LeftTabsComponent = () => {
@@ -30,6 +30,7 @@ const LeftTabsComponent = () => {
   const [isLoadingUser, setIsLoadingUser] = useState(false);
   const [isLoadingChannel, setIsLoadingChannel] = useState(false);
   const socket = useSocket();
+  const { currentUser } = useContext(UserContext);
 
   const { showDropdown, toggle } = useDropdown();
 
@@ -222,6 +223,9 @@ const LeftTabsComponent = () => {
                           </div>
                           <div className="dashboard-tabs-user__name">
                             <span>{`${user.firstName} ${user.lastName}`}</span>
+                            {user?.userId === currentUser?.userId && (
+                              <span className="you">(Me)</span>
+                            )}
                           </div>
                         </div>
                       </>
