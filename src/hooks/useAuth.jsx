@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useContext, useCallback } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useLocation } from "react-router-dom";
 import { api, APIS } from "../config/Api.config";
 import { UserContext } from "../context/User.context";
 import { setLocalStorage } from "../helpers/LocatStorage.helper";
@@ -13,7 +13,8 @@ export const useAuth = () => {
   const { setCurrentUser } = useContext(UserContext);
   const { showToast } = useToast();
   const navigate = useNavigate();
-
+  const location = useLocation();
+  const path = location.state?.from.path || "/client/32432";
   const showToastHanlder = useCallback(
     (message, type) => {
       showToast(message, type);
@@ -28,6 +29,7 @@ export const useAuth = () => {
       showToastHanlder(res?.message, "success");
       setCurrentUser(res?.data);
       setLocalStorage("user", res?.data);
+      navigate(path, { replace: true });
     } catch (e) {
       setError(e?.message);
       return e.message;

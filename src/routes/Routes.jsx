@@ -12,13 +12,12 @@ export const routes = createBrowserRouter([
     element: <ProtectedRoutes />,
     children: [
       {
-        path: "/",
+        path: "/client/:clientId",
         element: <HomePage />,
       },
     ],
   },
   {
-    path: "/",
     element: <PublicRoutes />,
     children: [
       {

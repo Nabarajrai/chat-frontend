@@ -49,6 +49,7 @@ const LoginPage = () => {
         password: loginValue.password,
       };
       await login(body);
+      console.log("Login body: page", body);
     },
     [login, loginValue, setError]
   );

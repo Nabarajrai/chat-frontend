@@ -1,5 +1,14 @@
-import { useState, useCallback, useMemo, useEffect, useContext } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import {
+  useState,
+  useCallback,
+  useMemo,
+  useEffect,
+  useContext,
+  useRef,
+} from "react";
 import classnames from "classnames";
+import { NavLink } from "react-router-dom";
 
 //components
 import ButtonComponent from "../button/Button.component";
@@ -31,11 +40,11 @@ const LeftTabsComponent = () => {
   const [isLoadingChannel, setIsLoadingChannel] = useState(false);
   const socket = useSocket();
   const { currentUser } = useContext(UserContext);
-
   const { showDropdown, toggle } = useDropdown();
 
   const { activeClassName, combinedClassName } = useClassName();
   const { handleTabChangeName, handleActiveTabIdChange } = useTabsContext();
+  const ref = useRef(null);
 
   const joinUser = useCallback(
     (userId) => {
@@ -140,11 +149,11 @@ const LeftTabsComponent = () => {
 
   useEffect(() => {
     getUsers();
-  }, [getUsers]);
+  }, []);
 
   useEffect(() => {
     getChannels();
-  }, [getChannels]);
+  }, []);
 
   return (
     <div className="dashboard-tab">
@@ -166,21 +175,24 @@ const LeftTabsComponent = () => {
               </span>
               <span className="title">Channels</span>
             </div>
-            <div className={combineClass}>
+            <div className={combineClass} ref={ref}>
               {isLoadingUser
                 ? "Loading..."
                 : channels.map((channel) => (
                     <>
-                      <div
-                        className={`dashboard-tabs__channel--lists ${
-                          channel.id === activeChannelId && "active"
-                        }`}
+                      <NavLink
+                        to={`/client/${channel.id}`}
+                        className={({ isActive }) =>
+                          `dashboard-tabs__channel--lists ${
+                            isActive ? "active" : ""
+                          }`
+                        }
                         onClick={() => activeChannelHandler(channel)}>
                         <span>
                           <FaHashtag />
                         </span>
                         <span>{channel?.name}</span>
-                      </div>
+                      </NavLink>
                     </>
                   ))}
 
@@ -210,10 +222,11 @@ const LeftTabsComponent = () => {
                   ? "Loading..."
                   : users.map((user) => (
                       <>
-                        <div
-                          className={`dashboard-tabs-user ${
-                            activeUserId === user.userId && "active"
-                          }`}
+                        <NavLink
+                          to={`/client/${user.userId}`}
+                          className={({ isActive }) =>
+                            `dashboard-tabs-user  ${isActive ? "active" : ""}`
+                          }
                           onClick={() => activeUserIdHandler(user)}>
                           <div className="dashboard-tabs-user__avatar">
                             <img
@@ -227,7 +240,7 @@ const LeftTabsComponent = () => {
                               <span className="you">(Me)</span>
                             )}
                           </div>
-                        </div>
+                        </NavLink>
                       </>
                     ))}
 

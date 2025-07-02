@@ -12,12 +12,7 @@ export const UserContext = createContext({
 });
 
 export const CurrentUserProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(null);
-
-  useEffect(() => {
-    const getUser = getLocalStorage("user");
-    setCurrentUser(getUser);
-  }, []);
+  const [currentUser, setCurrentUser] = useState(getLocalStorage("user"));
 
   return (
     <UserContext.Provider value={{ currentUser, setCurrentUser }}>
