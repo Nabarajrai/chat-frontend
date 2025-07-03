@@ -19,15 +19,25 @@ export const useSocket = (userId) => {
       socket.emit("join-user", userId); // ✅ THIS IS MISSING
     });
     socket.on("receive-user-message", (message) => {
-      console.log("📥 Received message:", message);
       try {
         const parsed =
           typeof message === "string" ? JSON.parse(message) : message;
-        setMessages((prev) => [...prev, parsed]);
+
+        // 🛠 Fix: Coerce all IDs to string for consistent comparison
+        const receiverId = String(parsed.receiverId);
+        const senderId = String(parsed.senderId);
+        const currentUserId = String(userId);
+
+        if (receiverId === currentUserId || senderId === currentUserId) {
+          setMessages((prev) => [...prev, parsed]);
+        } else {
+          console.warn("⚠️ Ignored message not meant for this user:", parsed);
+        }
       } catch (error) {
         console.error("❌ Failed to parse message:", message, error);
       }
     });
+
     socket.on("connect_error", (err) => {
       console.error("❌ Connection error:", err.message);
     });
