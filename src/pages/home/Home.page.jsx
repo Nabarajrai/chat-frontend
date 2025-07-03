@@ -10,7 +10,6 @@ import LeftTabsComponent from "../../components/leftTabs/LeftTabs.component";
 import { useSocket } from "../../hooks/useSocket";
 import { UserContext } from "../../context/User.context";
 //contexts
-import { useTabsContext } from "../../context/tabs/Tabs.context";
 import { useParams } from "react-router";
 const HomePage = () => {
   const { currentUser } = useContext(UserContext);
