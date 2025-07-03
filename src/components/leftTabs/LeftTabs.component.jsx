@@ -8,7 +8,7 @@ import {
   useRef,
 } from "react";
 import classnames from "classnames";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 
 //components
 import ButtonComponent from "../button/Button.component";
@@ -41,6 +41,7 @@ const LeftTabsComponent = () => {
   const socket = useSocket();
   const { currentUser } = useContext(UserContext);
   const { showDropdown, toggle } = useDropdown();
+  const { clientId } = useParams();
 
   const { activeClassName, combinedClassName } = useClassName();
   const { handleTabChangeName, handleActiveTabIdChange } = useTabsContext();
@@ -49,6 +50,7 @@ const LeftTabsComponent = () => {
   const joinUser = useCallback(
     (userId) => {
       socket.emit("join-user", userId);
+      console.log("Joined user:", userId);
     },
     [socket]
   );
@@ -57,7 +59,6 @@ const LeftTabsComponent = () => {
     (user) => {
       setActiveUserId(user?.userId);
       handleTabChangeName(`${user?.firstName} ${user?.lastName}`);
-      joinUser(user?.userId);
       handleActiveTabIdChange(user?.userId);
       setActiveClass("");
       setActiveChannelId(null);
@@ -154,6 +155,11 @@ const LeftTabsComponent = () => {
   useEffect(() => {
     getChannels();
   }, []);
+  useEffect(() => {
+    if (clientId) {
+      joinUser(clientId);
+    }
+  }, [clientId, joinUser]);
 
   return (
     <div className="dashboard-tab">

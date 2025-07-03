@@ -1,4 +1,4 @@
-import { useCallback, useContext, useState } from "react";
+import { useCallback, useContext } from "react";
 
 //component
 import HeaderComponent from "../../components/header/Header.component";
@@ -10,26 +10,26 @@ import LeftTabsComponent from "../../components/leftTabs/LeftTabs.component";
 import { useSocket } from "../../hooks/useSocket";
 import { UserContext } from "../../context/User.context";
 //contexts
-import { useMessageContext } from "../../context/message/Message.context";
 import { useTabsContext } from "../../context/tabs/Tabs.context";
+import { useParams } from "react-router";
 const HomePage = () => {
   const { currentUser } = useContext(UserContext);
-  const { messages } = useMessageContext();
-  console.log("Messages:", messages);
   const socket = useSocket(currentUser?.userId);
-  const { activeTabId } = useTabsContext();
+  const { clientId } = useParams();
   const sendMessageToUser = useCallback(
     (message) => {
-      console.log("Sending message:", message);
-      if (currentUser && activeTabId) {
+      if (currentUser) {
+        console.log("Sending message:", message);
+
         socket.emit("send-message-to-user", {
           senderId: currentUser.userId,
-          receiverId: activeTabId,
+          receiverId: clientId,
           message: message,
+          fullName: `${currentUser.firstName} ${currentUser.lastName}`,
         });
       }
     },
-    [socket, activeTabId, currentUser]
+    [socket, clientId, currentUser]
   );
 
   return (

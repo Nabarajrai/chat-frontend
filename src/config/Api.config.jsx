@@ -10,4 +10,5 @@ export const APIS = {
   logout: "/api/auth/logOut",
   users: "/api/users",
   channels: "/api/channels",
+  getByUserId: "/api/users",
 };

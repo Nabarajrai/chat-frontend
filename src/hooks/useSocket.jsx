@@ -18,7 +18,6 @@ export const useSocket = (userId) => {
       console.log("✅ Connected to server");
     });
     socket.on("receive-user-message", (message) => {
-      console.log("📩 Received message:", message);
       try {
         const parsed =
           typeof message === "string" ? JSON.parse(message) : message;
