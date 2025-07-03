@@ -2,15 +2,13 @@ import { memo, useEffect, useRef } from "react";
 //helpers
 import { sanitizeHtml } from "../../helpers/SafeHtml.helper";
 import { useMessageContext } from "../../context/message/Message.context";
-import { useTabsContext } from "../../context/tabs/Tabs.context";
 //hooks
 import { useUser } from "../../hooks/useUser";
 //react-router
 import { useParams } from "react-router-dom";
 
 const MessageComponent = () => {
-  const { messages } = useMessageContext();
-  const { tabName } = useTabsContext();
+  const { messages, setMessages } = useMessageContext();
   const messageRef = useRef(null);
   const { clientId } = useParams();
   const { getUserById, userDetails } = useUser();
@@ -18,7 +16,8 @@ const MessageComponent = () => {
 
   useEffect(() => {
     getUserById(clientId);
-  }, [clientId, getUserById]);
+    setMessages([]);
+  }, [clientId, getUserById, setMessages]);
 
   useEffect(() => {
     if (messageRef.current) {

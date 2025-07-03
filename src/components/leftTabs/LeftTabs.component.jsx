@@ -31,8 +31,6 @@ import { useTabsContext } from "../../context/tabs/Tabs.context";
 
 const LeftTabsComponent = () => {
   const [activeClass, setActiveClass] = useState("channels");
-  const [activeUserId, setActiveUserId] = useState(null);
-  const [activeChannelId, setActiveChannelId] = useState(null);
   const [users, setUsers] = useState([]);
   const [channels, setChannels] = useState([]);
   const [showDropdownDm, setShowDropdownDm] = useState();
@@ -50,18 +48,15 @@ const LeftTabsComponent = () => {
   const joinUser = useCallback(
     (userId) => {
       socket.emit("join-user", userId);
-      console.log("Joined user:", userId);
     },
     [socket]
   );
 
   const activeUserIdHandler = useCallback(
     (user) => {
-      setActiveUserId(user?.userId);
       handleTabChangeName(`${user?.firstName} ${user?.lastName}`);
       handleActiveTabIdChange(user?.userId);
       setActiveClass("");
-      setActiveChannelId(null);
     },
     [handleTabChangeName, joinUser, handleActiveTabIdChange]
   );
@@ -69,9 +64,7 @@ const LeftTabsComponent = () => {
   const activeChannelHandler = useCallback(
     (channel) => {
       handleTabChangeName(channel?.name);
-      setActiveChannelId(channel?.id);
       setActiveClass("");
-      setActiveUserId(null);
     },
     [handleTabChangeName]
   );
@@ -93,8 +86,6 @@ const LeftTabsComponent = () => {
 
   const handleShowActive = useCallback((type) => {
     setActiveClass(type);
-    setActiveUserId(null);
-    setActiveChannelId(null);
   }, []);
   const activeClassNamesDM = activeClassName(showDropdownDm, "active");
 
