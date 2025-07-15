@@ -1,9 +1,11 @@
 import { useEffect } from "react";
 import { socket } from "../helpers/Socket.helper";
 import { useMessageContext } from "../context/message/Message.context";
+import { useParams } from "react-router";
 
 export const useSocket = (userId) => {
   const { setMessages } = useMessageContext();
+  const { clientId } = useParams();
 
   useEffect(() => {
     if (!userId) return;
@@ -37,6 +39,22 @@ export const useSocket = (userId) => {
         console.error("❌ Failed to parse message:", message, error);
       }
     });
+    socket.on("receive-message-to-channel", (message) => {
+      try {
+        const parsed =
+          typeof message === "string" ? JSON.parse(message) : message;
+        const channelId = String(parsed.channelId);
+        const currentChannelId = String(clientId);
+
+        if (channelId === currentChannelId) {
+          setMessages((prev) => [...prev, parsed]);
+        } else {
+          console.warn("⚠️ Ignored message not meant for this channel:");
+        }
+      } catch (error) {
+        console.error("❌ Failed to parse message:", message, error);
+      }
+    });
 
     socket.on("connect_error", (err) => {
       console.error("❌ Connection error:", err.message);
@@ -46,8 +64,9 @@ export const useSocket = (userId) => {
       socket.off("connect");
       socket.off("connect_error");
       socket.off("receive-user-message");
+      socket.off("receive-message-to-channel");
     };
-  }, [userId, setMessages]);
+  }, [userId, setMessages, clientId]);
 
   return socket;
 };

@@ -11,10 +11,12 @@ import { useSocket } from "../../hooks/useSocket";
 import { UserContext } from "../../context/User.context";
 //contexts
 import { useParams } from "react-router";
+
 const HomePage = () => {
   const { currentUser } = useContext(UserContext);
   const socket = useSocket(currentUser?.userId);
   const { clientId } = useParams();
+
   const sendMessageToUser = useCallback(
     (message) => {
       if (currentUser) {
@@ -65,7 +67,7 @@ const HomePage = () => {
           <div className="dashboard-content">
             <MessageComponent />
             <div className="dashboard-footer">
-              <TextEditor sendMessage={combinedFunction} />
+              <TextEditor sendMessage={combinedFunction()} />
             </div>
           </div>
         </div>
