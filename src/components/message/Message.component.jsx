@@ -1,33 +1,50 @@
-import { memo, useEffect, useRef } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 //helpers
 import { sanitizeHtml } from "../../helpers/SafeHtml.helper";
 import { useMessageContext } from "../../context/message/Message.context";
 //hooks
 import { useUser } from "../../hooks/useUser";
+import { useChannelById } from "../../hooks/useChannels";
 //react-router
 import { useParams } from "react-router-dom";
 
 const MessageComponent = () => {
   const { messages, setMessages } = useMessageContext();
+  const [name, setName] = useState("");
   const messageRef = useRef(null);
   const { clientId } = useParams();
   const { getUserById, userDetails } = useUser();
+  const { getChannelDetails, channelDetails } = useChannelById();
   const fullName = `${userDetails?.firstName} ${userDetails?.lastName} `;
-
+  const channelName = `${channelDetails[0]?.name}`;
   useEffect(() => {
-    getUserById(clientId);
-    setMessages([]);
-  }, [clientId, getUserById, setMessages]);
+    if (clientId.includes("C")) {
+      getChannelDetails(clientId);
+      setMessages([]);
+    } else {
+      getUserById(clientId);
+      setMessages([]);
+    }
+  }, [clientId, getUserById, setMessages, getChannelDetails]);
 
   useEffect(() => {
     if (messageRef.current) {
       messageRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages]);
+  useEffect(() => {
+    if (clientId.includes("C")) {
+      setName(channelName);
+    } else {
+      setName(fullName);
+    }
+  }, [channelName, fullName, clientId]);
 
   return (
     <div className="message-section">
-      <div className="message-header">{fullName && <h1># {fullName} </h1>}</div>
+      <div className="message-header">
+        <h1>#{name}</h1>
+      </div>
       <div className="message-lists">
         {messages.map((msg) => {
           return (

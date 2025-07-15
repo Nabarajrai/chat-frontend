@@ -31,3 +31,22 @@ export const useChannels = () => {
     getChannels,
   };
 };
+
+export const useChannelById = () => {
+  const [channelDetails, setChannelDetails] = useState([]);
+  const getChannelDetails = useCallback(async (channelId) => {
+    try {
+      const res = await api(`${APIS.getByChannelId}/${channelId}`);
+      if (res?.status === "success") {
+        setChannelDetails(res?.data);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }, []);
+
+  return {
+    getChannelDetails,
+    channelDetails,
+  };
+};

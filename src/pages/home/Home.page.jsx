@@ -30,6 +30,28 @@ const HomePage = () => {
     },
     [socket, clientId, currentUser]
   );
+  const sendMessageToChannel = useCallback(
+    (message) => {
+      if (currentUser) {
+        console.log("Sending message to channel:", message);
+        socket.emit("send-message-to-channel", {
+          senderId: currentUser.userId,
+          channelId: clientId,
+          message: message,
+          fullName: `${currentUser.firstName} ${currentUser.lastName}`,
+        });
+      }
+    },
+    [currentUser, socket, clientId]
+  );
+
+  const combinedFunction = () => {
+    if (clientId.includes("D")) {
+      return sendMessageToUser;
+    } else {
+      return sendMessageToChannel;
+    }
+  };
 
   return (
     <div className="dashboard-container">
@@ -43,7 +65,7 @@ const HomePage = () => {
           <div className="dashboard-content">
             <MessageComponent />
             <div className="dashboard-footer">
-              <TextEditor sendMessage={sendMessageToUser} />
+              <TextEditor sendMessage={combinedFunction} />
             </div>
           </div>
         </div>

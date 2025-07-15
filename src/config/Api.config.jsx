@@ -11,4 +11,5 @@ export const APIS = {
   users: "/api/users",
   channels: "/api/channels",
   getByUserId: "/api/users",
+  getByChannelId: "/api/channel",
 };

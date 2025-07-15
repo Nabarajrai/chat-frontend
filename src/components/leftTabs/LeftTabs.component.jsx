@@ -51,6 +51,12 @@ const LeftTabsComponent = () => {
     },
     [socket]
   );
+  const joinChannel = useCallback(
+    (channelId) => {
+      socket.emit("join-room", channelId);
+    },
+    [socket]
+  );
 
   const activeUserIdHandler = useCallback(
     (user) => {
@@ -148,9 +154,13 @@ const LeftTabsComponent = () => {
   }, []);
   useEffect(() => {
     if (clientId) {
-      joinUser(clientId);
+      if (clientId.includes("C")) {
+        joinChannel(clientId);
+      } else {
+        joinUser(clientId);
+      }
     }
-  }, [clientId, joinUser]);
+  }, [clientId, joinUser, joinChannel]);
 
   return (
     <div className="dashboard-tab">
