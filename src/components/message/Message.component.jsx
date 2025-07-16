@@ -39,7 +39,6 @@ const MessageComponent = () => {
       setName(fullName);
     }
   }, [channelName, fullName, clientId]);
-
   return (
     <div className="message-section">
       <div className="message-header">

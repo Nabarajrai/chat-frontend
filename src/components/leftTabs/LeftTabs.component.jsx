@@ -153,14 +153,14 @@ const LeftTabsComponent = () => {
     getChannels();
   }, []);
   useEffect(() => {
-    if (clientId) {
+    if (socket && socket.connected && clientId) {
       if (clientId.includes("C")) {
         joinChannel(clientId);
       } else {
         joinUser(clientId);
       }
     }
-  }, [clientId, joinUser, joinChannel]);
+  }, [clientId, joinUser, joinChannel, socket && socket.connected]);
 
   return (
     <div className="dashboard-tab">

@@ -22,7 +22,7 @@ const HomePage = () => {
       if (currentUser) {
         console.log("Sending message:", message);
 
-        socket.emit("send-message-to-user", {
+        socket.timeout(5000).emit("send-message-to-user", {
           senderId: currentUser.userId,
           receiverId: clientId,
           message: message,
@@ -36,7 +36,7 @@ const HomePage = () => {
     (message) => {
       if (currentUser) {
         console.log("Sending message to channel:", message);
-        socket.emit("send-message-to-channel", {
+        socket.timeout(5000).emit("send-message-to-channel", {
           senderId: currentUser.userId,
           channelId: clientId,
           message: message,
