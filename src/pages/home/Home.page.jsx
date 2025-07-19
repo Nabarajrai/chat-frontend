@@ -41,6 +41,7 @@ const HomePage = () => {
           channelId: clientId,
           message: message,
           fullName: `${currentUser.firstName} ${currentUser.lastName}`,
+          is_read: false,
         });
       }
     },
