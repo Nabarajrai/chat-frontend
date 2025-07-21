@@ -12,7 +12,6 @@ export const apiGenerator = ({ baseURL }) => {
       withCredentials: true,
       ...apiConfig,
     };
-
     if (body) {
       config.data = body;
     }

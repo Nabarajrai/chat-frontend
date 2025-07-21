@@ -39,6 +39,7 @@ const MessageComponent = () => {
       setName(fullName);
     }
   }, [channelName, fullName, clientId]);
+  console.log("messages", messages);
   return (
     <div className="message-section">
       <div className="message-header">
@@ -62,7 +63,7 @@ const MessageComponent = () => {
                   <div className="message-body">
                     <div
                       dangerouslySetInnerHTML={{
-                        __html: sanitizeHtml(msg?.data),
+                        __html: sanitizeHtml(msg?.message),
                       }}
                     />
                   </div>

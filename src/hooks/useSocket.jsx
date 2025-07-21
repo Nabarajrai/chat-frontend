@@ -21,24 +21,40 @@ export const useSocket = (userId) => {
       socket.emit("join-user", userId); // ✅ THIS IS MISSING
     });
     socket.on("receive-user-message", (message) => {
+      console.log("testing user id");
       try {
         const parsed =
           typeof message === "string" ? JSON.parse(message) : message;
 
-        // 🛠 Fix: Coerce all IDs to string for consistent comparison
         const receiverId = String(parsed.receiverId);
         const senderId = String(parsed.senderId);
         const currentUserId = String(userId);
+        const currentChannelId = String(clientId);
 
-        if (receiverId === currentUserId || senderId === currentUserId) {
+        if (!receiverId || !senderId) {
+          console.warn("🚫 Missing IDs in message:", parsed);
+          return;
+        }
+
+        if (currentChannelId.startsWith("C")) {
+          console.log("💬 Skipping DM messages in this handler");
+          return;
+        }
+        const isIncomingOrOutgoing =
+          (receiverId === currentChannelId && senderId === currentUserId) ||
+          (senderId === currentChannelId && receiverId === currentUserId);
+
+        if (isIncomingOrOutgoing) {
+          console.log("📩 Accepted message:", parsed);
           setMessages((prev) => [...prev, parsed]);
         } else {
-          console.warn("⚠️ Ignored message not meant for this user:", parsed);
+          console.warn("⚠️ Ignored irrelevant message:", parsed);
         }
       } catch (error) {
         console.error("❌ Failed to parse message:", message, error);
       }
     });
+
     socket.on("receive-message-to-channel", (message) => {
       try {
         const parsed =

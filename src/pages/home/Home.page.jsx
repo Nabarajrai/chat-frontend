@@ -21,7 +21,6 @@ const HomePage = () => {
     (message) => {
       if (currentUser) {
         console.log("Sending message:", message);
-
         socket.timeout(5000).emit("send-message-to-user", {
           senderId: currentUser.userId,
           receiverId: clientId,
