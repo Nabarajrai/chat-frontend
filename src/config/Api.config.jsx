@@ -13,4 +13,5 @@ export const APIS = {
   getByUserId: "/api/users",
   getByChannelId: "/api/channel",
   getMessageById: "/api/userMessage",
+  getMessageByChannelId: "/api/channelMessage",
 };

@@ -25,7 +25,8 @@ const HomePage = () => {
           senderId: currentUser.userId,
           receiverId: clientId,
           message: message,
-          fullName: `${currentUser.firstName} ${currentUser.lastName}`,
+          senderFullName: `${currentUser.firstName} ${currentUser.lastName}`,
+          is_read: false,
         });
       }
     },

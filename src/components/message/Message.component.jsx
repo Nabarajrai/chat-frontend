@@ -58,7 +58,7 @@ const MessageComponent = () => {
                 </div>
               </div>
               <div className="message-user-container">
-                <div className="message-user-name">{msg?.fullName}</div>
+                <div className="message-user-name">{msg?.senderFullName}</div>
                 <div className="message-body-wrapper">
                   <div className="message-body">
                     <div

@@ -45,7 +45,6 @@ export const useSocket = (userId) => {
           (senderId === currentChannelId && receiverId === currentUserId);
 
         if (isIncomingOrOutgoing) {
-          console.log("📩 Accepted message:", parsed);
           setMessages((prev) => [...prev, parsed]);
         } else {
           console.warn("⚠️ Ignored irrelevant message:", parsed);

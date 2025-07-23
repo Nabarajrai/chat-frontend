@@ -17,7 +17,7 @@ import ButtonComponent from "../button/Button.component";
 import { useDropdown } from "../../hooks/useDropdown";
 import { useClassName } from "../../hooks/useActiveClass";
 import { useSocket } from "../../hooks/useSocket";
-import { useMessage } from "../../hooks/useMessage";
+import { useMessage, useMessageByChannelId } from "../../hooks/useMessage";
 
 //icons
 import { FaPlus } from "react-icons/fa";
@@ -29,6 +29,7 @@ import { api, APIS } from "../../config/Api.config";
 //contexts
 import { UserContext } from "../../context/User.context";
 import { useTabsContext } from "../../context/tabs/Tabs.context";
+import { useMessageContext } from "../../context/message/Message.context";
 
 const LeftTabsComponent = () => {
   const [activeClass, setActiveClass] = useState("channels");
@@ -45,8 +46,9 @@ const LeftTabsComponent = () => {
   const { activeClassName, combinedClassName } = useClassName();
   const { handleTabChangeName, handleActiveTabIdChange } = useTabsContext();
   const ref = useRef(null);
-  const { messages, getMessageByUserId } = useMessage();
-  console.log("Messages in LeftTabsComponent:", messages);
+  const { getMessageByUserId } = useMessage();
+  const { getMessageByChannelId } = useMessageByChannelId();
+  const { setMessages } = useMessageContext();
   const joinUser = useCallback(
     (userId) => {
       socket.emit("join-user", userId);
@@ -158,10 +160,13 @@ const LeftTabsComponent = () => {
     if (clientId) {
       if (clientId.includes("C")) {
         joinChannel(clientId);
+        getMessageByChannelId(clientId);
+        setMessages([]);
         console.log("Joining channel:", clientId);
       } else {
         joinUser(clientId);
         getMessageByUserId(currentUser?.userId, clientId);
+        setMessages([]);
         console.log("Joining user:", currentUser?.userId, clientId);
       }
     }
