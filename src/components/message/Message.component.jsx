@@ -13,10 +13,10 @@ const MessageComponent = () => {
   const [name, setName] = useState("");
   const messageRef = useRef(null);
   const { clientId } = useParams();
-  const { getUserById, userDetails } = useUser();
-  const { getChannelDetails, channelDetails } = useChannelById();
-  const fullName = `${userDetails?.firstName} ${userDetails?.lastName} `;
-  const channelName = `${channelDetails[0]?.name}`;
+  const { getUserById, userDetails, userLoading } = useUser();
+  const { getChannelDetails, channelDetails, isLoadingChannel } =
+    useChannelById();
+
   useEffect(() => {
     if (clientId.includes("C")) {
       getChannelDetails(clientId);
@@ -34,16 +34,20 @@ const MessageComponent = () => {
   }, [messages]);
   useEffect(() => {
     if (clientId.includes("C")) {
-      setName(channelName);
+      setName(channelDetails[0]?.fullName);
     } else {
-      setName(fullName);
+      setName(userDetails?.fullName);
     }
-  }, [channelName, fullName, clientId]);
-  console.log("messages", messages);
+  }, [clientId, channelDetails, userDetails]);
+
   return (
     <div className="message-section">
       <div className="message-header">
-        <h1>#{name}</h1>
+        {isLoadingChannel || userLoading ? (
+          <div className="message-header__title">Loading...</div>
+        ) : (
+          <h1 className="message-header__title">#{name}</h1>
+        )}
       </div>
       <div className="message-lists">
         {messages.map((msg) => {
