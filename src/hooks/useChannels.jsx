@@ -14,6 +14,7 @@ export const useChannels = () => {
         setChannels(res?.data);
         setIsLoadingChannel(false);
       } else {
+        setIsLoadingChannel(false);
         console.error(res?.message);
       }
     } catch (e) {
@@ -34,19 +35,26 @@ export const useChannels = () => {
 
 export const useChannelById = () => {
   const [channelDetails, setChannelDetails] = useState([]);
+  const [isLoadingChannel, setIsLoadingChannel] = useState(false);
   const getChannelDetails = useCallback(async (channelId) => {
+    setIsLoadingChannel(true);
     try {
       const res = await api(`${APIS.getByChannelId}/${channelId}`);
       if (res?.status === "success") {
         setChannelDetails(res?.data);
+        setIsLoadingChannel(false);
       }
     } catch (e) {
+      setIsLoadingChannel(false);
       console.log(e);
+    } finally {
+      setIsLoadingChannel(false);
     }
   }, []);
 
   return {
     getChannelDetails,
     channelDetails,
+    isLoadingChannel,
   };
 };
