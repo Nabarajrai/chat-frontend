@@ -9,7 +9,7 @@ import { useChannelById } from "../../hooks/useChannels";
 import { useParams } from "react-router-dom";
 
 const MessageComponent = () => {
-  const { messages, setMessages } = useMessageContext();
+  const { messages } = useMessageContext();
   const [name, setName] = useState("");
   const messageRef = useRef(null);
   const { clientId } = useParams();
@@ -20,12 +20,10 @@ const MessageComponent = () => {
   useEffect(() => {
     if (clientId.includes("C")) {
       getChannelDetails(clientId);
-      setMessages([]);
     } else {
       getUserById(clientId);
-      setMessages([]);
     }
-  }, [clientId, getUserById, setMessages, getChannelDetails]);
+  }, [clientId, getUserById, messages, getChannelDetails]);
 
   useEffect(() => {
     if (messageRef.current) {
@@ -39,7 +37,7 @@ const MessageComponent = () => {
       setName(userDetails?.fullName);
     }
   }, [clientId, channelDetails, userDetails]);
-
+  // console.log("message component", messages);
   return (
     <div className="message-section">
       <div className="message-header">

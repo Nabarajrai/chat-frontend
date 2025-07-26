@@ -25,7 +25,6 @@ export const useSocket = (userId) => {
       try {
         const parsed =
           typeof message === "string" ? JSON.parse(message) : message;
-
         const receiverId = String(parsed.receiverId);
         const senderId = String(parsed.senderId);
         const currentUserId = String(userId);

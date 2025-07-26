@@ -15,6 +15,7 @@ export const useMessage = () => {
         );
 
         if (res?.status === "success") {
+          console.log("Messages fetched successfully:", res.data);
           setMessages(res?.data);
         } else {
           console.error(res?.message);

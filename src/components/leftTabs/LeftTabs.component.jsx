@@ -48,7 +48,6 @@ const LeftTabsComponent = () => {
   const ref = useRef(null);
   const { getMessageByUserId } = useMessage();
   const { getMessageByChannelId } = useMessageByChannelId();
-  const { setMessages } = useMessageContext();
   const joinUser = useCallback(
     (userId) => {
       socket.emit("join-user", userId);
@@ -161,12 +160,9 @@ const LeftTabsComponent = () => {
       if (clientId.includes("C")) {
         joinChannel(clientId);
         getMessageByChannelId(clientId);
-        setMessages([]);
-        console.log("Joining channel:", clientId);
       } else {
         joinUser(clientId);
         getMessageByUserId(currentUser?.userId, clientId);
-        setMessages([]);
         console.log("Joining user:", currentUser?.userId, clientId);
       }
     }
