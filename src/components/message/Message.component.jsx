@@ -5,11 +5,14 @@ import { useMessageContext } from "../../context/message/Message.context";
 //hooks
 import { useUser } from "../../hooks/useUser";
 import { useChannelById } from "../../hooks/useChannels";
+import { useMessage, useMessageByChannelId } from "../../hooks/useMessage";
 //react-router
 import { useParams } from "react-router-dom";
 
 const MessageComponent = () => {
   const { messages } = useMessageContext();
+  const { isLoading } = useMessage();
+  const { isLoading: isLoadingChannelId } = useMessageByChannelId();
   const [name, setName] = useState("");
   const messageRef = useRef(null);
   const { clientId } = useParams();
@@ -37,7 +40,7 @@ const MessageComponent = () => {
       setName(userDetails?.fullName);
     }
   }, [clientId, channelDetails, userDetails]);
-  // console.log("message component", messages);
+  console.log("message component", messages);
   return (
     <div className="message-section">
       <div className="message-header">
@@ -48,32 +51,36 @@ const MessageComponent = () => {
         )}
       </div>
       <div className="message-lists">
-        {messages.map((msg) => {
-          return (
-            <div className="message-wrapper" key={msg.id} ref={messageRef}>
-              <div className="message-user">
-                <div className="message-user__avatar">
-                  <img
-                    src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50"
-                    alt=""
-                  />
-                </div>
-              </div>
-              <div className="message-user-container">
-                <div className="message-user-name">{msg?.senderFullName}</div>
-                <div className="message-body-wrapper">
-                  <div className="message-body">
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html: sanitizeHtml(msg?.message),
-                      }}
+        {isLoading || isLoadingChannelId ? (
+          <div className="message-loading">Loading messages...</div>
+        ) : (
+          messages.map((msg) => {
+            return (
+              <div className="message-wrapper" key={msg.id} ref={messageRef}>
+                <div className="message-user">
+                  <div className="message-user__avatar">
+                    <img
+                      src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50"
+                      alt=""
                     />
                   </div>
                 </div>
+                <div className="message-user-container">
+                  <div className="message-user-name">{msg?.senderFullName}</div>
+                  <div className="message-body-wrapper">
+                    <div className="message-body">
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: sanitizeHtml(msg?.message),
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })
+        )}
       </div>
     </div>
   );

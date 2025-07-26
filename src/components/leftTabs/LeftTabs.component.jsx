@@ -29,7 +29,6 @@ import { api, APIS } from "../../config/Api.config";
 //contexts
 import { UserContext } from "../../context/User.context";
 import { useTabsContext } from "../../context/tabs/Tabs.context";
-import { useMessageContext } from "../../context/message/Message.context";
 
 const LeftTabsComponent = () => {
   const [activeClass, setActiveClass] = useState("channels");
