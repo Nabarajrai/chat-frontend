@@ -1,0 +1,13 @@
+@use "../helpers/variables" as *;
+@use "../helpers/mixin" as *;
+@use "../helpers//responsive" as *;
+
+.layout-section {
+  @include flex($justify: space-between);
+}
+.layout-content {
+  width: 70px;
+}
+.layout-main {
+  flex: 1;
+}

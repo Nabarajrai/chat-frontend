@@ -8,7 +8,7 @@ import {
   useRef,
 } from "react";
 import classnames from "classnames";
-import { NavLink, useParams } from "react-router-dom";
+import { useNavigate, NavLink, useParams } from "react-router-dom";
 
 //components
 import ButtonComponent from "../button/Button.component";
@@ -111,6 +111,8 @@ const LeftTabsComponent = () => {
     setShowDropdownDm((prev) => !prev);
   }, []);
 
+  const navigate = useNavigate();
+
   const getUsers = useCallback(async () => {
     setIsLoadingUser(true);
     try {
@@ -147,6 +149,13 @@ const LeftTabsComponent = () => {
     }
   }, []);
 
+  const navigateToCallPage = useCallback(
+    (roomId) => {
+      navigate(`/join-room/${roomId}`);
+    },
+    [navigate]
+  );
+
   useEffect(() => {
     getUsers();
   }, []);
@@ -172,7 +181,10 @@ const LeftTabsComponent = () => {
       <div className="dashboard-tab-lists">
         <div className="dashboard-tabs">
           <div className="dashboard-tabs__room">
-            <ButtonComponent size="lg" varient="primary">
+            <ButtonComponent
+              size="lg"
+              varient="primary"
+              onClick={() => navigateToCallPage("J32")}>
               <span className="dashboard-tabs__room--title">Meeting Room</span>
               <span className="dashboard-tabs__room--icon">
                 <FaPlus />
