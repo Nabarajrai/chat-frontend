@@ -3,10 +3,9 @@
 @use "../helpers//responsive" as *;
 
 .header-container {
-  max-width: 900px;
   width: 100%;
   margin: 0 auto;
-  height: 2.7rem;
+  background-color: rgba($primary-color, 0.8);
   @include small-screen {
     max-width: 500px;
     width: 100%;
@@ -14,9 +13,10 @@
 }
 .header-wrapper {
   @include flex($justify: space-between);
+  max-width: 900px;
   width: 100%;
-  padding: 0px 1rem;
-  height: 3.2rem;
+  margin: 0 auto;
+  padding: 0.6rem 1rem;
 }
 .header-searchbar {
   @include flex($justify: space-between);

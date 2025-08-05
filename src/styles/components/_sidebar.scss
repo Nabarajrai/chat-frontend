@@ -5,7 +5,9 @@
 .sidebar-container {
   @include flex($justify: center);
   align-items: flex-start;
+  background-color: rgba($primary-color, 0.8);
   height: calc(100vh - 3rem);
+  width: 100%;
 }
 
 .sidebar-wrapper {

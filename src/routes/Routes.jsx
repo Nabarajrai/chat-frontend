@@ -6,6 +6,7 @@ import PublicRoutes from "./PublicRouted";
 import HomePage from "../pages/home/Home.page";
 import LoginPage from "../pages/login/Login.page";
 import RegisterPage from "../pages/register/Register.page";
+import CallPage from "../pages/call/Call.page";
 
 export const routes = createBrowserRouter([
   {
@@ -14,6 +15,10 @@ export const routes = createBrowserRouter([
       {
         path: "/client/:clientId",
         element: <HomePage />,
+      },
+      {
+        path: "/join-room/:roomId",
+        element: <CallPage />,
       },
     ],
   },
